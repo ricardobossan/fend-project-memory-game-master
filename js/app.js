@@ -40,6 +40,9 @@ let array = [
  *   - add each card's HTML to the page
  */
 let fragment = document.createDocumentFragment();
+
+let everyCard = document.getElementsByClassName('card');
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 // FISHER-YATES ALGORITM (Udacity's FEND version
 function shuffle() {
@@ -54,8 +57,10 @@ function shuffle() {
     return array;
 }
 
-function generateEachCard() {
+let generate = function generateEachCard() {
 	let shuffledArray = shuffle(array);
+
+	document.querySelector('.deck').innerHTML = "";//erases previous <ul> content, if function called again after page refresh
 
 	for (arrayIndex of array) {
 		let newElement = document.createElement('li');
@@ -84,7 +89,22 @@ function generateEachCard() {
 	document.querySelector('.deck').appendChild(fragment);
 }
 
-document.addEventListener('DOMContentLoaded', generateEachCard());
+let show = function showSymbol () {
+	document.querySelector('.card').classList.toggle("show");
+	document.querySelector('.card').classList.toggle("open");
+}
+
+//Restart Button - Only works calling the generateEachCard() function by it's function expression name `generate`, with parenthesis `()`
+let res = function restart () {
+	return generate();
+}
+
+document.querySelector('.restart').addEventListener('click', res);
+
+document.addEventListener('DOMContentLoaded', generate);
+
+document.getElementsByClassName('card').addEventListener('click', show);
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
