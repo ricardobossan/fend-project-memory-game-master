@@ -1,15 +1,3 @@
-/*NEXT STEP:
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
 //``GIT BRANCHOUT "View Programmer' Comments"`` before final commit on the Master branch, which will keep this project's original comments only, made by Udacity
 
 /*
@@ -62,10 +50,10 @@ let generate = function generateEachCard() {
 
 	document.querySelector('.deck').innerHTML = "";//erases previous <ul> content, if function called again after page refresh
 
-	for (arrayList of array) {
+	for (arrayIndex of array) {
 		let newElement = document.createElement('li');
 		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${arrayList}"><i/>`;	
+		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/>`;	
 /*		if (newElement.classList === "card") {
 			this.addEventListener('click', show);
 		}*/
@@ -90,6 +78,10 @@ let generate = function generateEachCard() {
 	*/
 
 	document.querySelector('.deck').appendChild(fragment);
+
+for (let z = 0; z < everyCard.length; z++) {
+	everyCard.item(z).addEventListener('click', show);
+}
 }
 
 /*function createIndividualCard () {
@@ -100,12 +92,16 @@ let generate = function generateEachCard() {
 
 createIndividualCard();*/
 
+let deckChoice = document.querySelector('.deck');
 
-let show = function showSymbol () {
-//	for (let j = 0; j < array.length; j++) {
-		/*everyCard[j]*/this.innerHTML = '<span>does it show?</span>'/*.classList.toggle("open")*/;
-		/*everyCard[j]*/this.innerHTML = '<span>does it show?</span>'/*.classList.toggle("show")*/;
+let show = function showSymbol (event) {
+	//for (let j = 0; j < array.length; j++) {
+	//everyCard.preventDefault();
+	event.currentTarget.classList.toggle("open");
+	event.currentTarget.classList.toggle("show");
 //	}
+
+/*	setTimeout(show, 0);*/
 }
 
 //Restart Button - Only works calling the generateEachCard() function by it's function expression name `generate`, with parenthesis `()`
@@ -113,12 +109,9 @@ let res = function restart () {
 	return generate();
 }
 
-document.querySelector('.restart').addEventListener('click', res);
-
 window.addEventListener('DOMContentLoaded', generate);
 
-/*window.*/everyCard.addEventListener('click', show);
-
+document.querySelector('.restart').addEventListener('click', res);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
