@@ -44,7 +44,7 @@ let fragment = document.createDocumentFragment();
 let everyCard = document.getElementsByClassName('card');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-// FISHER-YATES ALGORITM (Udacity's FEND version
+// FISHER-YATES ALGORITM (Udacity's FEND version)
 function shuffle() {
 	let currentIndex = array.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
@@ -62,10 +62,13 @@ let generate = function generateEachCard() {
 
 	document.querySelector('.deck').innerHTML = "";//erases previous <ul> content, if function called again after page refresh
 
-	for (arrayIndex of array) {
+	for (arrayList of array) {
 		let newElement = document.createElement('li');
 		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/></li>`;
+		newElement.innerHTML = `<i class="fa ${arrayList}"><i/>`;	
+/*		if (newElement.classList === "card") {
+			this.addEventListener('click', show);
+		}*/
 		fragment.appendChild(newElement);
 	}	
 
@@ -89,9 +92,20 @@ let generate = function generateEachCard() {
 	document.querySelector('.deck').appendChild(fragment);
 }
 
+/*function createIndividualCard () {
+	for (arrayIndex of array) {
+		let individualCard = document.querySelector('.deck').children.item(arrayIndex);
+	}
+}
+
+createIndividualCard();*/
+
+
 let show = function showSymbol () {
-	document.querySelector('.card').classList.toggle("show");
-	document.querySelector('.card').classList.toggle("open");
+//	for (let j = 0; j < array.length; j++) {
+		/*everyCard[j]*/this.innerHTML = '<span>does it show?</span>'/*.classList.toggle("open")*/;
+		/*everyCard[j]*/this.innerHTML = '<span>does it show?</span>'/*.classList.toggle("show")*/;
+//	}
 }
 
 //Restart Button - Only works calling the generateEachCard() function by it's function expression name `generate`, with parenthesis `()`
@@ -101,10 +115,9 @@ let res = function restart () {
 
 document.querySelector('.restart').addEventListener('click', res);
 
-document.addEventListener('DOMContentLoaded', generate);
+window.addEventListener('DOMContentLoaded', generate);
 
-document.getElementsByClassName('card').addEventListener('click', show);
-
+/*window.*/everyCard.addEventListener('click', show);
 
 /*
  * set up the event listener for a card. If a card is clicked:
