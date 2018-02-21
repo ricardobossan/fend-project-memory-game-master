@@ -3,7 +3,10 @@
 /*
  * Create a list that holds all of your cards
  */
-let array = [
+
+const deck = document.querySelector('.deck');
+
+let arrays = [
 	"fa-diamond",
 	"fa-diamond",
 	"fa-paper-plane-o",
@@ -27,91 +30,60 @@ let array = [
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-let fragment = document.createDocumentFragment();
 
-let everyCard = document.getElementsByClassName('card');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 // FISHER-YATES ALGORITM (Udacity's FEND version)
 function shuffle() {
-	let currentIndex = array.length, temporaryValue, randomIndex;
+	let currentIndex = arrays.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = arrays[currentIndex];
+        arrays[currentIndex] = arrays[randomIndex];
+        arrays[randomIndex] = temporaryValue;
     }
-    return array;
+    return arrays;
 }
-
+// CREATES SHUFFLED DECK
 let generate = function generateEachCard() {
-	let shuffledArray = shuffle(array);
+	let shuffledArrays = shuffle(arrays);
 
-	document.querySelector('.deck').innerHTML = "";//erases previous <ul> content, if function called again after page refresh
+	// erases previous deck <ul> content, when the restart button is clicked
+	deck.innerHTML = "";
 
-	for (arrayIndex of array) {
-		let newElement = document.createElement('li');
-		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/>`;	
-/*		if (newElement.classList === "card") {
-			this.addEventListener('click', show);
-		}*/
-		fragment.appendChild(newElement);
-	}	
-
-/*OR .forEach()	array Method (comprehend code's logic):
-	shuffledArray.forEach(function(arrayIndex) {
-		let newElement = document.createElement('li');
-		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/></li>`;
-		fragment.appendChild(newElement);
-	});*/
-
-/*OR for loop (for better understanding the code's logic):
-	for (let arrayIndex = 0; arrayIndex < array.length; arrayIndex++) {
-		let newElement = document.createElement('li');
-		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${shuffledArray[arrayIndex]}"><i/></li>`;
-		fragment.appendChild(newElement);
-	};
-	*/
-
-	document.querySelector('.deck').appendChild(fragment);
-
-for (let z = 0; z < everyCard.length; z++) {
-	everyCard.item(z).addEventListener('click', show);
+	let fragment = document.createDocumentFragment();
+	arrays.forEach(function createCard(array) {
+		let li = document.createElement('li');
+		li.classList = "card";
+		li.innerHTML = `<i class="fa ${array}"><i/>`;	
+		fragment.appendChild(li);
+	});
+	deck.appendChild(fragment);
 }
-}
+generate();
 
-/*function createIndividualCard () {
-	for (arrayIndex of array) {
-		let individualCard = document.querySelector('.deck').children.item(arrayIndex);
+let everyCard = document.getElementsByClassName('card');
+//REVEALS CARD ON CLICK
+let show = function() {
+	for (let i = 0; i < everyCard.length; i++) {
+		everyCard.item(i).addEventListener('click', function () {
+			everyCard.item(i).classList.toggle("open");
+			everyCard.item(i).classList.toggle("show");	
+		});
 	}
 }
+show();
 
-createIndividualCard();*/
-
-let deckChoice = document.querySelector('.deck');
-
-let show = function showSymbol (event) {
-	//for (let j = 0; j < array.length; j++) {
-	//everyCard.preventDefault();
-	event.currentTarget.classList.toggle("open");
-	event.currentTarget.classList.toggle("show");
-//	}
-
-/*	setTimeout(show, 0);*/
-}
-
-//Restart Button - Only works calling the generateEachCard() function by it's function expression name `generate`, with parenthesis `()`
+//RESTART BUTTON
 let res = function restart () {
-	return generate();
+	generate();
+	show();
 }
-
-window.addEventListener('DOMContentLoaded', generate);
+//window.addEventListener('DOMContentLoaded', generate);
 
 document.querySelector('.restart').addEventListener('click', res);
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
