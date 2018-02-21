@@ -45,11 +45,11 @@ function shuffle() {
     }
     return arrays;
 }
-// CREATES SHUFFLED DECK
+//CREATES SHUFFLED DECK
 let generate = function generateEachCard() {
 	let shuffledArrays = shuffle(arrays);
 
-	// erases previous deck <ul> content, when the restart button is clicked
+	//erases previous <ul> content, when the restart button is clicked
 	deck.innerHTML = "";
 
 	let fragment = document.createDocumentFragment();
@@ -60,10 +60,14 @@ let generate = function generateEachCard() {
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
+
+
 }
 generate();
 
+
 let everyCard = document.getElementsByClassName('card');
+
 //REVEALS CARD ON CLICK
 let show = function() {
 	for (let i = 0; i < everyCard.length; i++) {
@@ -75,7 +79,7 @@ let show = function() {
 }
 show();
 
-//RESTART BUTTON
+//Restart Button
 let res = function restart () {
 	generate();
 	show();
@@ -83,7 +87,6 @@ let res = function restart () {
 //window.addEventListener('DOMContentLoaded', generate);
 
 document.querySelector('.restart').addEventListener('click', res);
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
