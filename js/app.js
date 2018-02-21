@@ -24,6 +24,8 @@ let arrays = [
 	"fa-bomb",
 	"fa-bomb"
 	];
+
+let open = [];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -70,13 +72,45 @@ let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
 let show = function() {
+	let getOpenClass = document.getElementsByClassName('open');
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
-			everyCard.item(i).classList.toggle("open");
-			everyCard.item(i).classList.toggle("show");	
+		everyCard.item(i).classList.toggle("open");
+		everyCard.item(i).classList.toggle("show");
+		if (getOpenClass.length < 2) {
+			break;
+		} else if (getOpenClass === 2) {			
+			open.splice(0, 0, everyCard.item(i));
+			open.splice(0, 0, everyCard.item(i - 1));
+			if (open[0]/*open.item(0)*/ === open[1]/*open.item(1)*/) {
+				getOpenClass.item(0).classList.add('match')
+				getOpenClass.item(1).classList.add('match')
+			}
+		} else {
+
+		}
+		} if (open[0]/*open.item(0)*/ === open[1]/*open.item(1)*/) {
+				getOpenclass.item(0).classList.add("match");
+				getOpenclass.item(1).classList.add("match");
+				getOpenclass.item(1).classList.remove("open");
+				getOpenclass.item(0).classList.remove("open");
+				open.slice(0, 2);
+			}
+		}
+		else if (getOpenClass.length > 3) {
+			getOpenClass.item(0).classList.remove("show");
+			getOpenClass.item(0).classList.remove("open");
+			getOpenClass.item(0).classList.remove("show");
+			getOpenClass.item(0).classList.remove("open");
+			open.slice(0, 2);
+		} else {
+			getOpenClass
+		}
 		});
 	}
 }
+
+
 show();
 
 //Restart Button
@@ -84,9 +118,12 @@ let res = function restart () {
 	generate();
 	show();
 }
-//window.addEventListener('DOMContentLoaded', generate);
+
+//let open = function ()
 
 document.querySelector('.restart').addEventListener('click', res);
+
+//document.getElementsByClassName('open').addEventListener
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
