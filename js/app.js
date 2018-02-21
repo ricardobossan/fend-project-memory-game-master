@@ -3,6 +3,9 @@
 /*
  * Create a list that holds all of your cards
  */
+
+const deck = document.querySelector('.deck');
+
 let array = [
 	"fa-diamond",
 	"fa-diamond",
@@ -29,7 +32,6 @@ let array = [
  */
 let fragment = document.createDocumentFragment();
 
-let everyCard = document.getElementsByClassName('card');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 // FISHER-YATES ALGORITM (Udacity's FEND version)
@@ -48,60 +50,24 @@ function shuffle() {
 let generate = function generateEachCard() {
 	let shuffledArray = shuffle(array);
 
-	document.querySelector('.deck').innerHTML = "";//erases previous <ul> content, if function called again after page refresh
+	deck.innerHTML = "";//erases previous <ul> content, if function called again after page refresh
 
 	for (arrayIndex of array) {
 		let newElement = document.createElement('li');
 		newElement.classList = "card";
 		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/>`;	
-/*		if (newElement.classList === "card") {
-			this.addEventListener('click', show);
-		}*/
 		fragment.appendChild(newElement);
 	}	
-
-/*OR .forEach()	array Method (comprehend code's logic):
-	shuffledArray.forEach(function(arrayIndex) {
-		let newElement = document.createElement('li');
-		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${arrayIndex}"><i/></li>`;
-		fragment.appendChild(newElement);
-	});*/
-
-/*OR for loop (for better understanding the code's logic):
-	for (let arrayIndex = 0; arrayIndex < array.length; arrayIndex++) {
-		let newElement = document.createElement('li');
-		newElement.classList = "card";
-		newElement.innerHTML = `<i class="fa ${shuffledArray[arrayIndex]}"><i/></li>`;
-		fragment.appendChild(newElement);
-	};
-	*/
-
 	document.querySelector('.deck').appendChild(fragment);
 
-for (let z = 0; z < everyCard.length; z++) {
-	everyCard.item(z).addEventListener('click', show);
-}
-}
-
-/*function createIndividualCard () {
-	for (arrayIndex of array) {
-		let individualCard = document.querySelector('.deck').children.item(arrayIndex);
+	let everyCard = document.getElementsByClassName('card');
+	for (let i = 0; i < everyCard.length; i++) {
+		everyCard.item(i).addEventListener('click', function () {
+			everyCard.item(i).classList.toggle("open");
+			everyCard.item(i).classList.toggle("show");	
+		});
 	}
-}
 
-createIndividualCard();*/
-
-let deckChoice = document.querySelector('.deck');
-
-let show = function showSymbol (event) {
-	//for (let j = 0; j < array.length; j++) {
-	//everyCard.preventDefault();
-	event.currentTarget.classList.toggle("open");
-	event.currentTarget.classList.toggle("show");
-//	}
-
-/*	setTimeout(show, 0);*/
 }
 
 //Restart Button - Only works calling the generateEachCard() function by it's function expression name `generate`, with parenthesis `()`
