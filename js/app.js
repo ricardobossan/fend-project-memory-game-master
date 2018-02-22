@@ -77,19 +77,20 @@ let show = function() {
 		everyCard.item(i).addEventListener('click', function () {
 		everyCard.item(i).classList.toggle("open");
 		everyCard.item(i).classList.toggle("show");
-		if (getOpenClass.length < 2) {
-			break;
-		} else if (getOpenClass === 2) {			
+		if (getOpenClass.length < 2) { break; } else if (getOpenClass === 2) {			
 			open.splice(0, 0, everyCard.item(i));
 			open.splice(0, 0, everyCard.item(i - 1));
 			if (open[0]/*open.item(0)*/ === open[1]/*open.item(1)*/) {
-				getOpenClass.item(0).classList.add('match')
-				getOpenClass.item(1).classList.add('match')
+				getOpenClass.item(0).classList.add('match');
+				getOpenClass.item(1).classList.add('match');
+			} else {
+				open.slice(0, 2);
 			}
 		} else {
-
+			getOpenClass.item(0).classList.remove('open');
+			getOpenClass.item(0).classList.remove('open');
 		}
-		} if (open[0]/*open.item(0)*/ === open[1]/*open.item(1)*/) {
+		/*} if (open[0] === open[1]) {
 				getOpenclass.item(0).classList.add("match");
 				getOpenclass.item(1).classList.add("match");
 				getOpenclass.item(1).classList.remove("open");
@@ -105,7 +106,7 @@ let show = function() {
 			open.slice(0, 2);
 		} else {
 			getOpenClass
-		}
+		}*/
 		});
 	}
 }
