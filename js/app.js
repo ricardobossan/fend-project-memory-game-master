@@ -76,13 +76,8 @@ let show = function() {
 				/*open[3].classList.remove("open", "show");*/
 			open.splice(0, 0, everyCard.item(i));
 			open[0].classList.add("open", "show");
-			if (open.length < 2) {
-				return;
-			} else if (open.length === 2) {
-				//AQUI A DECLARAÇÃO OU ASSIGNMENT DE VARIÁVEL NAO ESTÁ FUNCIONANDO
-				cardSymbol1 = open[0].firstChild;
-				cardSymbol2 = open[1].firstChild;				
-				if (cardSymbol1.outerHTML === cardSymbol2.outerHTML) {
+			if (open.length === 2) {				
+				if (open[0].firstChild.outerHTML === open[1].firstChild.outerHTML && open[0].firstChild.outerHTML !== open[0].firstChild.outerHTML && open[1].firstChild.outerHTML !== open[1].firstChild.outerHTML) {
 					let ifMatch = function () {
 					if (cardSymbol1.outerHTML === cardSymbol2.outerHTML/* && cardSymbol1 === cardSymbol2*/) {
 						return true;						
@@ -102,8 +97,6 @@ let show = function() {
 					open.splice(0, 2);
 				} else {						
 				}
-			} else {
-			return;				
 			}
 			window.addEventListener('click', function () { if (open.length > 2) {
 				open[0].classList.remove("open", "show");
