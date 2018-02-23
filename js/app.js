@@ -73,6 +73,7 @@ let show = function() {
 	/*document.getElementsBy*/
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
+				/*open[3].classList.remove("open", "show");*/
 			open.splice(0, 0, everyCard.item(i));
 			open[0].classList.add("open", "show");
 			if (open.length < 2) {
@@ -93,20 +94,31 @@ let show = function() {
 					match = tempMatch.slice();
 					match[0].classList.add("match");
 					match[1].classList.add("match");
-					open[0].classList.remove("open", "show")
-					open[1].classList.remove("open", "show")
+					open[0].classList.remove("open", "show");
+					open[1].classList.remove("open", "show");
 					match[0].classList.remove("open", "show");
 					match[1].classList.remove("open", "show");
 					tempMatch.splice(0, 2);
 					open.splice(0, 2);
-					} else {
-						return;
-					}
+				} else {						
+				}
 			} else {
-				open[0].classList.remove("open", "show");				
-				open[0].classList.remove("open", "show");
-				open.splice(0, 2);
+			return;				
 			}
+			window.addEventListener('click', function () { if (open.length > 2) {
+				open[0].classList.remove("open", "show");
+				open[1].classList.remove("open", "show");
+				open[2].classList.remove("open", "show");
+				open.splice(0, 3);
+				/*if (open.length)
+				for (let z = 0; z < 1; z++) {
+					window.addEventListener('click', function() {
+						console.log("did it jump one turn?");
+						console.log("No. What next?")
+					});
+				}				*/
+			}})
+			
 		});
 	}
 }
