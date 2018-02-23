@@ -34,7 +34,6 @@ let cardSymbol2 = "";
  *   - add each card's HTML to the page
  */
 
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 // FISHER-YATES ALGORITM (Udacity's FEND version)
 function shuffle() {
@@ -80,31 +79,38 @@ let show = function() {
 				return;
 			} else if (open.length === 2) {
 				//AQUI A DECLARAÇÃO OU ASSIGNMENT DE VARIÁVEL NAO ESTÁ FUNCIONANDO
-				cardSymbol1 = open[0].firstChild.outerHTML;
-				cardSymbol2 = open[1].firstChild.outerHTML;				
-				function ifMatch () {
-					if (cardSymbol1 === cardSymbol2) {
+				cardSymbol1 = open[0].firstChild;
+				cardSymbol2 = open[1].firstChild;				
+				if (cardSymbol1.outerHTML === cardSymbol2.outerHTML) {
+					let ifMatch = function () {
+					if (cardSymbol1.outerHTML === cardSymbol2.outerHTML/* && cardSymbol1 === cardSymbol2*/) {
 						return true;						
 					} else {
 						return;
 					}
 				}		
-				tempMatch = open.filter(ifMatch);
-				match = tempMatch.slice();
-				tempMatch.splice(0, 2);
-				open[0].classList.remove("open", "show")
-				open[1].classList.remove("open", "show")
-				open.splice(0, 2);
-				match[1].classList.remove("open", "show");
-				match[0].classList.remove("open", "show");
-				match[0].classList.add("match");
-				match[1].classList.add("match");
+					tempMatch = open.filter(ifMatch);
+					match = tempMatch.slice();
+					match[0].classList.add("match");
+					match[1].classList.add("match");
+					open[0].classList.remove("open", "show")
+					open[1].classList.remove("open", "show")
+					match[0].classList.remove("open", "show");
+					match[1].classList.remove("open", "show");
+					tempMatch.splice(0, 2);
+					open.splice(0, 2);
+					} else {
+						return;
+					}
 			} else {
-				return;
+				open[0].classList.remove("open", "show");				
+				open[0].classList.remove("open", "show");
+				open.splice(0, 2);
 			}
 		});
 	}
 }
+
 
 
 show();
