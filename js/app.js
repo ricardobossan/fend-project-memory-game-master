@@ -3,9 +3,7 @@
 /*
  * Create a list that holds all of your cards
  */
-
 const deck = document.querySelector('.deck');
-
 let arrays = [
 	"fa-diamond",
 	"fa-diamond",
@@ -24,8 +22,11 @@ let arrays = [
 	"fa-bomb",
 	"fa-bomb"
 	];
-
 let open = [];
+let tempMatch = [];
+let match = [];
+let cardSymbol1 = "";
+let cardSymbol2 = "";
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -62,8 +63,6 @@ let generate = function generateEachCard() {
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
-
-
 }
 generate();
 
@@ -72,41 +71,37 @@ let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
 let show = function() {
-	let getOpenClass = document.getElementsByClassName('open');
+	/*document.getElementsBy*/
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
-		everyCard.item(i).classList.toggle("open");
-		everyCard.item(i).classList.toggle("show");
-		if (getOpenClass.length < 2) { break; } else if (getOpenClass === 2) {			
 			open.splice(0, 0, everyCard.item(i));
-			open.splice(0, 0, everyCard.item(i - 1));
-			if (open[0]/*open.item(0)*/ === open[1]/*open.item(1)*/) {
-				getOpenClass.item(0).classList.add('match');
-				getOpenClass.item(1).classList.add('match');
+			open[0].classList.add("open", "show");
+			if (open.length < 2) {
+				return;
+			} else if (open.length === 2) {
+				//AQUI A DECLARAÇÃO OU ASSIGNMENT DE VARIÁVEL NAO ESTÁ FUNCIONANDO
+				cardSymbol1 = open[0].firstChild.outerHTML;
+				cardSymbol2 = open[1].firstChild.outerHTML;				
+				function ifMatch () {
+					if (cardSymbol1 === cardSymbol2) {
+						return true;						
+					} else {
+						return;
+					}
+				}		
+				tempMatch = open.filter(ifMatch);
+				match = tempMatch.slice();
+				tempMatch.splice(0, 2);
+				open[0].classList.remove("open", "show")
+				open[1].classList.remove("open", "show")
+				open.splice(0, 2);
+				match[1].classList.remove("open", "show");
+				match[0].classList.remove("open", "show");
+				match[0].classList.add("match");
+				match[1].classList.add("match");
 			} else {
-				open.slice(0, 2);
+				return;
 			}
-		} else {
-			getOpenClass.item(0).classList.remove('open');
-			getOpenClass.item(0).classList.remove('open');
-		}
-		/*} if (open[0] === open[1]) {
-				getOpenclass.item(0).classList.add("match");
-				getOpenclass.item(1).classList.add("match");
-				getOpenclass.item(1).classList.remove("open");
-				getOpenclass.item(0).classList.remove("open");
-				open.slice(0, 2);
-			}
-		}
-		else if (getOpenClass.length > 3) {
-			getOpenClass.item(0).classList.remove("show");
-			getOpenClass.item(0).classList.remove("open");
-			getOpenClass.item(0).classList.remove("show");
-			getOpenClass.item(0).classList.remove("open");
-			open.slice(0, 2);
-		} else {
-			getOpenClass
-		}*/
 		});
 	}
 }
