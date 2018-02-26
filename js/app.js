@@ -23,7 +23,6 @@ let arrays = [
 	"fa-bomb"
 	];
 let open = [];
-let tempMatch = [];
 let match = [];
 /*
  * Display the cards on the page
@@ -66,7 +65,7 @@ generate();
 let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
-let show = function() {
+let game = function() {
 	/*document.getElementsBy*/
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
@@ -78,23 +77,14 @@ let show = function() {
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
 				if (open.length === 2) {				
-					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)/* && (open[0].firstChild.outerHTML !== open[0].firstChild.outerHTML) && (open[1].firstChild.outerHTML !== open[1].firstChild.outerHTML)*/) {
-						let ifMatch = function () {
-						if (open[0].firstChild.outerHTML === open[1].firstChild.outerHTML) {
-							return true;						
-						} else {
-							return;
-						}
-					}		
-						tempMatch = open.filter(ifMatch);
-						match = tempMatch.slice();
+					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
+						match = open.slice();
 						match[0].classList.add("match");
 						match[1].classList.add("match");
 						open[0].classList.remove("open", "show");
 						open[1].classList.remove("open", "show");
 						match[0].classList.remove("open", "show");
 						match[1].classList.remove("open", "show");
-						tempMatch.splice(0, 2);
 						open.splice(0, 2);
 					} else {						
 					}
@@ -106,17 +96,26 @@ let show = function() {
 					open.splice(0, 3);					
 				}});
 			}
-			
+		if (match.length === 16) {
+			window.alert(`Congratulations! You win with ${calc(match.length/2)} matching cards!`);
+		}
 		});
 	}
 }
 
-show();
+game();
 
 //Restart Button
 let res = function restart () {
+
+	// GOTTA SOMEHOW MAKE THE open and match ARRAYS BE GLOBAL, IN ORDER TO CALL THEM FROM THIS FUNCTION
+	open.splice(0, open.length);	
+	match.splice(0, match.length);
+	
+	// GOTTA ERASE THE MOVES COUNTER SO IT CAN START AGAIN FROM ZERO WHEN THIS FUNCTION IS CALLED
+
 	generate();
-	show();
+	game();
 }
 
 document.querySelector('.restart').addEventListener('click', res);
