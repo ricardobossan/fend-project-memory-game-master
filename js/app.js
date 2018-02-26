@@ -47,10 +47,6 @@ function shuffle() {
 //CREATES SHUFFLED DECK
 let generate = function generateEachCard() {
 	let shuffledArrays = shuffle(arrays);
-
-	//erases previous <ul> content, when the restart button is clicked
-	deck.innerHTML = "";
-
 	let fragment = document.createDocumentFragment();
 	arrays.forEach(function createCard(array) {
 		let li = document.createElement('li');
@@ -105,10 +101,13 @@ let game = function() {
 
 game();
 
-//Restart Button
+//Restart Button's function
 let res = function restart () {
+	
+	//erases previouslly generated deck's ul
+	deck.innerHTML = "";
 
-	// GOTTA SOMEHOW MAKE THE open and match ARRAYS BE GLOBAL, IN ORDER TO CALL THEM FROM THIS FUNCTION
+	//erases previouslly generated array lists
 	open.splice(0, open.length);	
 	match.splice(0, match.length);
 	
