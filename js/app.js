@@ -25,8 +25,6 @@ let arrays = [
 let open = [];
 let tempMatch = [];
 let match = [];
-let cardSymbol1 = "";
-let cardSymbol2 = "";
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -65,7 +63,6 @@ let generate = function generateEachCard() {
 }
 generate();
 
-
 let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
@@ -74,49 +71,45 @@ let show = function() {
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
 				/*open[3].classList.remove("open", "show");*/
-			open.splice(0, 0, everyCard.item(i));
-			open[0].classList.add("open", "show");
-			if (open.length === 2) {				
-				if (open[0].firstChild.outerHTML === open[1].firstChild.outerHTML && open[0].firstChild.outerHTML !== open[0].firstChild.outerHTML && open[1].firstChild.outerHTML !== open[1].firstChild.outerHTML) {
-					let ifMatch = function () {
-					if (cardSymbol1.outerHTML === cardSymbol2.outerHTML/* && cardSymbol1 === cardSymbol2*/) {
-						return true;						
-					} else {
-						return;
+			if (!open.includes(everyCard.item(i))) {				
+			/*open.classList.contains(`${everyCard.item[i].firstChild.classList}`)) {
+				return;
+			} else {*/
+				open.splice(0, 0, everyCard.item(i));
+				open[0].classList.add("open", "show");
+				if (open.length === 2) {				
+					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)/* && (open[0].firstChild.outerHTML !== open[0].firstChild.outerHTML) && (open[1].firstChild.outerHTML !== open[1].firstChild.outerHTML)*/) {
+						let ifMatch = function () {
+						if (open[0].firstChild.outerHTML === open[1].firstChild.outerHTML) {
+							return true;						
+						} else {
+							return;
+						}
+					}		
+						tempMatch = open.filter(ifMatch);
+						match = tempMatch.slice();
+						match[0].classList.add("match");
+						match[1].classList.add("match");
+						open[0].classList.remove("open", "show");
+						open[1].classList.remove("open", "show");
+						match[0].classList.remove("open", "show");
+						match[1].classList.remove("open", "show");
+						tempMatch.splice(0, 2);
+						open.splice(0, 2);
+					} else {						
 					}
-				}		
-					tempMatch = open.filter(ifMatch);
-					match = tempMatch.slice();
-					match[0].classList.add("match");
-					match[1].classList.add("match");
+				}
+				window.addEventListener('click', function () { if (open.length > 2) {
 					open[0].classList.remove("open", "show");
 					open[1].classList.remove("open", "show");
-					match[0].classList.remove("open", "show");
-					match[1].classList.remove("open", "show");
-					tempMatch.splice(0, 2);
-					open.splice(0, 2);
-				} else {						
-				}
+					open[2].classList.remove("open", "show");
+					open.splice(0, 3);					
+				}});
 			}
-			window.addEventListener('click', function () { if (open.length > 2) {
-				open[0].classList.remove("open", "show");
-				open[1].classList.remove("open", "show");
-				open[2].classList.remove("open", "show");
-				open.splice(0, 3);
-				/*if (open.length)
-				for (let z = 0; z < 1; z++) {
-					window.addEventListener('click', function() {
-						console.log("did it jump one turn?");
-						console.log("No. What next?")
-					});
-				}				*/
-			}})
 			
 		});
 	}
 }
-
-
 
 show();
 
@@ -126,11 +119,8 @@ let res = function restart () {
 	show();
 }
 
-//let open = function ()
-
 document.querySelector('.restart').addEventListener('click', res);
 
-//document.getElementsByClassName('open').addEventListener
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
