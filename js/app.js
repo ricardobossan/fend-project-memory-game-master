@@ -24,12 +24,9 @@ let arrays = [
 	];
 let open = [];
 let match = [];
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+	
+let starList = document.querySelector('.stars');
+let moveNum = document.querySelector('.moves');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 // FISHER-YATES ALGORITM (Udacity's FEND version)
@@ -44,6 +41,14 @@ function shuffle() {
     }
     return arrays;
 }
+
+	/*let moveCount = function mC () {
+		let fragment2 = document.createDocumentFragment();
+		let li2 = document.createElement('li');
+		li2.innerHTML = `<i class="fa fa-star"></i>`;
+		fragment2.appendChild('li2');
+		starList.appendChild('fragment2');
+	*/
 //CREATES SHUFFLED DECK
 let generate = function generateEachCard() {
 	let shuffledArrays = shuffle(arrays);
@@ -58,21 +63,40 @@ let generate = function generateEachCard() {
 }
 generate();
 
+//CREATES STAR ICON ON THE MOVE COUNTER
+let mC = function moveCounter() {
+	let fragment = document.createDocumentFragment();
+/*	arrays.forEach(function createCard(array) {*/
+		let li = document.createElement('li');
+		/*li.classList = "card";*/
+		li.innerHTML = `<i class="fa fa-star"><i/>`;	
+		fragment.appendChild(li);
+/*	});*/
+	starList.appendChild(fragment);
+}
+
+let nMC = function NumericMoveCounter () {
+	moveNum.innerHTML = document.querySelectorAll('.fa-star').length;
+}
+				
 let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
 let game = function() {
-	/*document.getElementsBy*/
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
-				/*open[3].classList.remove("open", "show");*/
+
+			// PREVENTS MATCHING SAME CARD UPON DOUBLE CLICK: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
 			if (!open.includes(everyCard.item(i))) {				
-			/*open.classList.contains(`${everyCard.item[i].firstChild.classList}`)) {
-				return;
-			} else {*/
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
+
+
 				if (open.length === 2) {				
+					
+					mC();
+					nMC();
+
 					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
 						match = open.slice();
 						match[0].classList.add("match");
@@ -85,11 +109,12 @@ let game = function() {
 					} else {						
 					}
 				}
-				window.addEventListener('click', function () { if (open.length > 2) {
-					open[0].classList.remove("open", "show");
-					open[1].classList.remove("open", "show");
-					open[2].classList.remove("open", "show");
-					open.splice(0, 3);					
+				window.addEventListener('click', function () { 
+					if (open.length > 2) {
+						open[0].classList.remove("open", "show");
+						open[1].classList.remove("open", "show");
+						open[2].classList.remove("open", "show");
+						open.splice(0, 3);					
 				}});
 			}
 		if (match.length === 16) {
@@ -101,11 +126,15 @@ let game = function() {
 
 game();
 
+
+
 //Restart Button's function
 let res = function restart () {
 	
 	//erases previouslly generated deck's ul
 	deck.innerHTML = "";
+	starList.innerHTML = "";
+	moveNum.innerHTML = "";
 
 	//erases previouslly generated array lists
 	open.splice(0, open.length);	
