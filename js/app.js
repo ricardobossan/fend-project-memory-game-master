@@ -79,6 +79,32 @@ let nMC = function NumericMoveCounter () {
 	moveNum.innerHTML = document.querySelectorAll('.fa-star').length;
 }
 				
+let vc = function victory () {
+	if (document.getElementsByClassName('match').length === 16) {
+		setTimeout(function() {
+			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
+		}, 1000);		
+	};
+}
+
+//Restart Button's function
+let res = function restart () {
+	
+	//erases previouslly generated deck's ul
+	deck.innerHTML = "";
+	starList.innerHTML = "";
+	moveNum.innerHTML = "";
+
+	//erases previouslly generated array lists
+	open.splice(0, open.length);	
+	match.splice(0, match.length);
+	
+	// GOTTA ERASE THE MOVES COUNTER SO IT CAN START AGAIN FROM ZERO WHEN THIS FUNCTION IS CALLED
+
+	generate();
+	game();
+}
+
 let everyCard = document.getElementsByClassName('card');
 
 //REVEALS CARD ON CLICK
@@ -106,6 +132,9 @@ let game = function() {
 						match[0].classList.remove("open", "show");
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
+
+						vc();
+
 					} else {						
 					}
 				}
@@ -117,34 +146,10 @@ let game = function() {
 						open.splice(0, 3);					
 				}});
 			}
-		if (match.length === 16) {
-			window.alert(`Congratulations! You win with ${calc(match.length/2)} matching cards!`);
-		}
 		});
 	}
 }
-
 game();
-
-
-
-//Restart Button's function
-let res = function restart () {
-	
-	//erases previouslly generated deck's ul
-	deck.innerHTML = "";
-	starList.innerHTML = "";
-	moveNum.innerHTML = "";
-
-	//erases previouslly generated array lists
-	open.splice(0, open.length);	
-	match.splice(0, match.length);
-	
-	// GOTTA ERASE THE MOVES COUNTER SO IT CAN START AGAIN FROM ZERO WHEN THIS FUNCTION IS CALLED
-
-	generate();
-	game();
-}
 
 document.querySelector('.restart').addEventListener('click', res);
 
