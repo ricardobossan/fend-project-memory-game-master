@@ -1,9 +1,7 @@
-//``GIT BRANCHOUT "View Programmer' Comments"`` before final commit on the Master branch, which will keep this project's original comments only, made by Udacity
+// TODO: APPLY STYLE GUIDES TO CODE: HTML, Javascript and Git
 
-/*
- * Create a list that holds all of your cards
- */
 const deck = document.querySelector('.deck');
+
 let arrays = [
 	"fa-diamond",
 	"fa-diamond",
@@ -22,14 +20,17 @@ let arrays = [
 	"fa-bomb",
 	"fa-bomb"
 	];
-let open = [];
-let match = [];
+
+let open = []; // array list for the cards that are turned (`.open`)
+let match = []; // array list for the pairs of cards that have the same symbol (`.match`)
 	
-let starList = document.querySelector('.stars');
+let starCounter = document.querySelector('.stars');
 let moveNum = document.querySelector('.moves');
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-// FISHER-YATES ALGORITM (Udacity's FEND version)
+/*
+Shuffle function from http://stackoverflow.com/a/2450976
+Fisher-Yates Algoritm (Udacity's FEND version)
+*/
 function shuffle() {
 	let currentIndex = arrays.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
@@ -42,8 +43,8 @@ function shuffle() {
     return arrays;
 }
 
-//CREATES SHUFFLED DECK
-let generate = function generateEachCard() {
+// Creates a shuffled deck (`.deck`)
+let generate = function () {
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
 	arrays.forEach(function createCard(array) {
@@ -54,68 +55,73 @@ let generate = function generateEachCard() {
 	});
 	deck.appendChild(fragment);
 }
-generate();
 
-//CREATES STAR ICON ON THE MOVE COUNTER
-let mC = function moveCounter() {
+// Creates a star icon on the move counter (.stars)
+let starMoveCounter = function () {
 	let fragment = document.createDocumentFragment();
-/*	arrays.forEach(function createCard(array) {*/
-		let li = document.createElement('li');
-		/*li.classList = "card";*/
+		let li = document.createElement('li');		
 		li.innerHTML = `<i class="fa fa-star"><i/>`;	
 		fragment.appendChild(li);
-/*	});*/
-	starList.appendChild(fragment);
+		starCounter.appendChild(fragment);
 }
 
-let nMC = function NumericMoveCounter () {
+// display the number of moves on the move counter (.moves)
+let numericMoveCounter = function  () {
 	moveNum.innerHTML = document.querySelectorAll('.fa-star').length;
 }
 				
-let vc = function victory () {
+// display victory message after the 16 cards are matched, with a wait of 800 milliseconds
+let victory = function  () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
 			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
-		}, 800);		
+		}, 800);
+
+		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
+		setTimeout(function() {
+			restart();
+		}, 2000);		
 	};
 }
 
 //Restart Button's function
-let res = function restart () {
+let restart = function () {
 	
-	//erases previouslly generated deck's ul
+	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
 	deck.innerHTML = "";
-	starList.innerHTML = "";
+	starCounter.innerHTML = "";
 	moveNum.innerHTML = "";
 
-	//erases previouslly generated array lists
+	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
 	open.splice(0, open.length);	
 	match.splice(0, match.length);
 	
-	// GOTTA ERASE THE MOVES COUNTER SO IT CAN START AGAIN FROM ZERO WHEN THIS FUNCTION IS CALLED
-
+	//generate new shuffled array and restarts game
 	generate();
 	game();
 }
 
 let everyCard = document.getElementsByClassName('card');
 
-//REVEALS CARD ON CLICK
 let game = function() {
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
 
-			// PREVENTS MATCHING SAME CARD UPON DOUBLE CLICK: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
-			if (!open.includes(everyCard.item(i))) {				
+			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
+			if (!open.includes(everyCard.item(i))) {
+
+				// Reveals each card on click, adding them to the `open` array list
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
 
 
 				if (open.length === 2) {				
 					
-					mC();
-					nMC();
+					// updates move counters each time a pair of cards is turned
+					starMoveCounter();
+					numericMoveCounter();
 
+					// checks if pair of cards have the same symbol and, if they do, adds them to the `match` array list
 					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
 						match = open.slice();
 						match[0].classList.add("match");
@@ -126,16 +132,13 @@ let game = function() {
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
 
-						vc();
-						if (document.getElementsByClassName('match').length === 16) {
-							setTimeout(function() {
-						res();
-							}, 2000);		
-						};
-
-					} else {						
+						// if 16 cards are matching its symbols, displays victory alert box
+						victory();
 					}
-				}
+/*
+				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.
+				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
+*/
 				window.addEventListener('click', function () { 
 					if (open.length > 2) {
 						open[0].classList.remove("open", "show");
@@ -143,21 +146,18 @@ let game = function() {
 						open[2].classList.remove("open", "show");
 						open.splice(0, 3);					
 				}});
+				}
 			}
 		});
 	}
 }
+
+// calls function to create deck of shuffled cards
+generate();
+
+// starts the game's logic
 game();
 
-document.querySelector('.restart').addEventListener('click', res);
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+// makes the restart button work when clicked (`.restart`)
+document.querySelector('.restart').addEventListener('click', restart);
