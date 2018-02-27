@@ -1,4 +1,25 @@
-// TODO: APPLY STYLE GUIDES TO CODE: Javascript and Git
+/*
+* TODO: Adjust code to meet the project rubric (Project Specification):
+* Congratulations Pop Up: 
+** Ask if the player wants to play again
+** How much time it took the player to finish the game
+** What the star rating was
+* Restart Button:
+** restart timer
+** restart star rating
+* Star Rating:
+** starts withh 3 stars, changes to two and then to one. The number of moves to change rating is up to me
+* Timer:
+** Timer is displayed at the begining of the game and starts to count
+** When the player wins, the timer stops
+* Usability: 
+** should with modern desktop, tablet and phone browsers
+* README:
+** detali the game and all dependencies
+* Comments:
+** comment adjustment to Project Specifications
+* Javascript Styleguide: Check it all over again
+*/
 
 const deck = document.querySelector('.deck');
 
