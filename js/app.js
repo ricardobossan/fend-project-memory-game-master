@@ -1,4 +1,4 @@
-// TODO: APPLY STYLE GUIDES TO CODE: HTML, Javascript and Git
+// TODO: APPLY STYLE GUIDES TO CODE: Javascript and Git
 
 const deck = document.querySelector('.deck');
 
@@ -44,34 +44,34 @@ function shuffle() {
 }
 
 // Creates a shuffled deck (`.deck`)
-let generate = function () {
+const generate = function () {
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
 	arrays.forEach(function createCard(array) {
 		let li = document.createElement('li');
 		li.classList = "card";
-		li.innerHTML = `<i class="fa ${array}"><i/>`;	
+		li.innerHTML = `<i class="fa ${array}"><i/>`;
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
 }
 
 // Creates a star icon on the move counter (.stars)
-let starMoveCounter = function () {
+const starMoveCounter = function () {
 	let fragment = document.createDocumentFragment();
-		let li = document.createElement('li');		
-		li.innerHTML = `<i class="fa fa-star"><i/>`;	
+		let li = document.createElement('li');
+		li.innerHTML = `<i class="fa fa-star"><i/>`;
 		fragment.appendChild(li);
 		starCounter.appendChild(fragment);
 }
 
 // display the number of moves on the move counter (.moves)
-let numericMoveCounter = function  () {
+const numericMoveCounter = function  () {
 	moveNum.innerHTML = document.querySelectorAll('.fa-star').length;
 }
 				
 // display victory message after the 16 cards are matched, with a wait of 800 milliseconds
-let victory = function  () {
+const victory = function  () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
 			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
@@ -80,12 +80,12 @@ let victory = function  () {
 		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
 		setTimeout(function() {
 			restart();
-		}, 2000);		
+		}, 2000);
 	};
 }
 
 //Restart Button's function
-let restart = function () {
+const restart = function () {
 	
 	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
 	deck.innerHTML = "";
@@ -93,7 +93,7 @@ let restart = function () {
 	moveNum.innerHTML = "";
 
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
-	open.splice(0, open.length);	
+	open.splice(0, open.length);
 	match.splice(0, match.length);
 	
 	//generate new shuffled array and restarts game
@@ -101,9 +101,9 @@ let restart = function () {
 	game();
 }
 
-let everyCard = document.getElementsByClassName('card');
+const everyCard = document.getElementsByClassName('card');
 
-let game = function() {
+const game = function() {
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
 
@@ -114,8 +114,7 @@ let game = function() {
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
 
-
-				if (open.length === 2) {				
+				if (open.length === 2) {
 					
 					// updates move counters each time a pair of cards is turned
 					starMoveCounter();
@@ -139,12 +138,12 @@ let game = function() {
 				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.
 				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
 */
-				window.addEventListener('click', function () { 
+				window.addEventListener('click', function () {
 					if (open.length > 2) {
 						open[0].classList.remove("open", "show");
 						open[1].classList.remove("open", "show");
 						open[2].classList.remove("open", "show");
-						open.splice(0, 3);					
+						open.splice(0, 3);
 				}});
 				}
 			}
@@ -157,7 +156,6 @@ generate();
 
 // starts the game's logic
 game();
-
 
 // makes the restart button work when clicked (`.restart`)
 document.querySelector('.restart').addEventListener('click', restart);
