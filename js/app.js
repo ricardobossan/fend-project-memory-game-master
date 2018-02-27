@@ -83,7 +83,7 @@ let vc = function victory () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
 			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
-		}, 1000);		
+		}, 500);		
 	};
 }
 
@@ -134,6 +134,11 @@ let game = function() {
 						open.splice(0, 2);
 
 						vc();
+						if (document.getElementsByClassName('match').length === 16) {
+							setTimeout(function() {
+						res();
+							}, 2000);		
+						};
 
 					} else {						
 					}
