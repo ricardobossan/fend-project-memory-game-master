@@ -13,9 +13,9 @@
 ** Timer is displayed at the begining of the game and starts to count
 ** When the player wins, the timer stops
 * Usability: 
-** should with modern desktop, tablet and phone browsers
+** should with modern desktop, tablet and phone browsers // Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 * README:
-** detali the game and all dependencies
+** detail the game and all dependencies
 * Comments:
 ** comment adjustment to Project Specifications
 * Javascript Styleguide: Check it all over again
@@ -95,7 +95,7 @@ const numericMoveCounter = function  () {
 const victory = function  () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
-			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
+			window.alert("Congratulations! You took " + endTime + " to finished the game! And Your rating was" + document.getElementsByClassName('fa-star').length + "! \nPlay again?");
 		}, 800);
 
 		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
