@@ -42,13 +42,6 @@ function shuffle() {
     return arrays;
 }
 
-	/*let moveCount = function mC () {
-		let fragment2 = document.createDocumentFragment();
-		let li2 = document.createElement('li');
-		li2.innerHTML = `<i class="fa fa-star"></i>`;
-		fragment2.appendChild('li2');
-		starList.appendChild('fragment2');
-	*/
 //CREATES SHUFFLED DECK
 let generate = function generateEachCard() {
 	let shuffledArrays = shuffle(arrays);
@@ -83,7 +76,7 @@ let vc = function victory () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
 			window.alert("Congratulations! You win with " + document.getElementsByClassName('fa-star').length + " moves!");
-		}, 500);		
+		}, 800);		
 	};
 }
 
