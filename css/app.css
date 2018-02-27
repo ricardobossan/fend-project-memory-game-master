@@ -118,7 +118,7 @@ h1 {
     }
     100% {
         background: #E36153;
-        transform: translate(0,0,0.866,-0.5,0.5,0.866);
+        transform: translate(0,0);
     }
 }
 
