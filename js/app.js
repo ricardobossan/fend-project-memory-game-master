@@ -20,7 +20,41 @@
 ** comment adjustment to Project Specifications
 * Javascript Styleguide: Check it all over again
 */
+/*
+let time = 0;
 
+let running = 0;
+
+function startPause() {
+	if (running === 0) {
+		running = 1;
+		increment();
+		document.getElementById('startPause').innerHTML = "Pause";
+	} else {
+		running = 0;
+		document.getElementById('startPause').innerHTML = "Resume";
+	}
+}
+
+function reset() {
+	running = 0;
+	time = 0;
+	document.getElementById('startPause').innerHTML = "Pause";
+}
+
+function increment () {
+	if(running === 1) {
+		setTimeout(function() {
+			time++;
+			let mins = Math.floor(time/10/60);
+			let secs = Math.floor(time/10);
+			let tenths = time % 10;
+			document.getElementById("timer").innerHTML = mins + ":" + secs + ":" + tenths;
+			increment();
+		}, 100);
+	}
+}
+*/
 const deck = document.querySelector('.deck');
 
 let arrays = [
@@ -77,6 +111,30 @@ const generate = function () {
 	deck.appendChild(fragment);
 }
 
+let timeCounter = document.getElementById('time-counter'),
+    s = 0, m = 0, h = 0;
+
+function myTimer() {
+    s++;
+    if (s >= 60) {
+        s = 0;
+        m++;
+        if (m >= 60) {
+            m = 0;
+            h++;
+        }
+    }
+  
+    timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
+
+    setTimeout(myTimer, 1000);
+}
+/*function timer() {
+    t = setTimeout(timer, 1000);
+}
+timer();*/
+setTimeout(myTimer, 1000);
+
 // Creates a star icon on the move counter (.stars)
 const starMoveCounter = function () {
 	let fragment = document.createDocumentFragment();
@@ -88,14 +146,14 @@ const starMoveCounter = function () {
 
 // display the number of moves on the move counter (.moves)
 const numericMoveCounter = function  () {
-	moveNum.innerHTML = document.querySelectorAll('.fa-star').length;
+	moveNum.innerHTML = document.querySelectorAll('.fa-star').length + " Moves";
 }
 				
 // display victory message after the 16 cards are matched, with a wait of 800 milliseconds
 const victory = function  () {
 	if (document.getElementsByClassName('match').length === 16) {
 		setTimeout(function() {
-			window.alert("Congratulations! You took " + endTime + " to finished the game! And Your rating was" + document.getElementsByClassName('fa-star').length + "! \nPlay again?");
+			window.alert("Congratulations! You took " + timeVariable + " to finished the game! And Your rating was" + document.getElementsByClassName('fa-star').length + "!\nPlay again?");
 		}, 800);
 
 		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
