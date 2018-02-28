@@ -3,6 +3,8 @@
 * Congratulations Pop Up: 
 ** Ask if the player wants to play again
 ** How much time it took the player to finish the game
+* Moves counter
+** fix it, so it won't rely wrongly on the star counter anymore
 ** What the star rating was
 * Restart Button:
 ** restart timer
@@ -20,41 +22,7 @@
 ** comment adjustment to Project Specifications
 * Javascript Styleguide: Check it all over again
 */
-/*
-let time = 0;
 
-let running = 0;
-
-function startPause() {
-	if (running === 0) {
-		running = 1;
-		increment();
-		document.getElementById('startPause').innerHTML = "Pause";
-	} else {
-		running = 0;
-		document.getElementById('startPause').innerHTML = "Resume";
-	}
-}
-
-function reset() {
-	running = 0;
-	time = 0;
-	document.getElementById('startPause').innerHTML = "Pause";
-}
-
-function increment () {
-	if(running === 1) {
-		setTimeout(function() {
-			time++;
-			let mins = Math.floor(time/10/60);
-			let secs = Math.floor(time/10);
-			let tenths = time % 10;
-			document.getElementById("timer").innerHTML = mins + ":" + secs + ":" + tenths;
-			increment();
-		}, 100);
-	}
-}
-*/
 const deck = document.querySelector('.deck');
 
 let arrays = [
@@ -78,8 +46,10 @@ let arrays = [
 
 let open = []; // array list for the cards that are turned (`.open`)
 let match = []; // array list for the pairs of cards that have the same symbol (`.match`)
+
+let move = 0;
 	
-let starCounter = document.querySelector('.stars');
+let starNum = document.querySelector('.stars');
 let moveNum = document.querySelector('.moves');
 
 /*
@@ -136,17 +106,18 @@ timer();*/
 setTimeout(myTimer, 1000);
 
 // Creates a star icon on the move counter (.stars)
-const starMoveCounter = function () {
+const starCounter = function () {
 	let fragment = document.createDocumentFragment();
 		let li = document.createElement('li');
 		li.innerHTML = `<i class="fa fa-star"><i/>`;
 		fragment.appendChild(li);
-		starCounter.appendChild(fragment);
+		starNum.appendChild(fragment);
 }
 
 // display the number of moves on the move counter (.moves)
-const numericMoveCounter = function  () {
-	moveNum.innerHTML = document.querySelectorAll('.fa-star').length + " Moves";
+const moveCounter = function () {
+	move++;
+	moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
 }
 				
 // display victory message after the 16 cards are matched, with a wait of 800 milliseconds
@@ -167,8 +138,9 @@ const victory = function  () {
 const restart = function () {
 	
 	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
+	move = 0;
 	deck.innerHTML = "";
-	starCounter.innerHTML = "";
+	starNum.innerHTML = "";
 	moveNum.innerHTML = "";
 
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
@@ -196,8 +168,9 @@ const game = function() {
 				if (open.length === 2) {
 					
 					// updates move counters each time a pair of cards is turned
-					starMoveCounter();
-					numericMoveCounter();
+					moveCounter();
+					starCounter();
+					/*moveCounter();*/
 
 					// checks if pair of cards have the same symbol and, if they do, adds them to the `match` array list
 					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
