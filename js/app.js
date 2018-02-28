@@ -32,7 +32,8 @@ let timeCounter = document.getElementById('time-counter'),
     s = 0, m = 0, h = 0;
 	move = 0,
 	open = [], // array list for the cards that are turned (`.open`)
-	match = []; // array list for the pairs of cards that have the same symbol (`.match`)
+	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
+	everyStar = document.getElementsByClassName('fa-star');
 
 	arrays = [
 		"fa-diamond",
@@ -98,21 +99,25 @@ let timer = function myTimer() {
     setTimeout(myTimer, 1000);
 }
 
-// Creates a star icon on the move counter (.stars)
-const starCounter = function () {
-	let fragment = document.createDocumentFragment();
-		let li = document.createElement('li');
-		li.innerHTML = `<i class="fa fa-star"><i/>`;
-		fragment.appendChild(li);
-		starNum.appendChild(fragment);
-}
-
 // display the number of moves on the move counter (.moves)
 const moveCounter = function () {
 	move++;
 	moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
 }
-				
+
+// If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
+const starCounter = function () {
+	if (move === 14) {
+		starNum.firstElementChild.outerHTML = "";
+	}
+	if (move === 19) {
+		starNum.firstElementChild.outerHTML = "";
+	}
+	if (move === 24) {
+		starNum.firstElementChild.outerHTML = "";
+	}
+}
+
 // display victory message after the 16 cards are matched, with a wait of 800 milliseconds
 const victory = function () {
 	if (document.getElementsByClassName('match').length === 16) {
@@ -123,10 +128,9 @@ const victory = function () {
 		//totalGameTime();
 		let gameTimeTemp = gameTime /1000;
 		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
-		/*totalTime < 3600 ? (totalTime >= 60 ? (totalTime/60/60.toFixed() + "h" + ((totalTime % 60) * 100).toFixed(0) + "m" + : totalTime);*/
-
+	
 		setTimeout(function() {
-			window.alert("Congratulations! You took " + totalTime + " to finished the game! And Your rating was " + document.getElementsByClassName('fa-star').length + "!\n\nPlay again?");
+			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + "!\n\nPlay again?");
 		}, 800);
 
 		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
@@ -145,7 +149,7 @@ const restart = function () {
 	h = 0;
 	move = 0;
 	deck.innerHTML = "";
-	starNum.innerHTML = "";
+	starNum.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
 	moveNum.innerHTML = "0 Moves";
 
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
