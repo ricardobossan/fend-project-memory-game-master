@@ -1,7 +1,7 @@
 /*
 * TODO: Adjust code to meet the project rubric (Project Specification):
 * Congratulations Pop Up: 
-** Ask if the player wants to play again
+OK ** Ask if the player wants to play again OK
 ** How much time it took the player to finish the game
 * Moves counter
 ** fix it, so it won't rely wrongly on the star counter anymore
@@ -23,34 +23,35 @@
 * Javascript Styleguide: Check it all over again
 */
 
-const deck = document.querySelector('.deck');
+const deck = document.querySelector('.deck'),
+	everyCard = document.getElementsByClassName('card'),
+	starNum = document.querySelector('.stars'),
+	moveNum = document.querySelector('.moves');
 
-let arrays = [
-	"fa-diamond",
-	"fa-diamond",
-	"fa-paper-plane-o",
-	"fa-paper-plane-o",
-	"fa-anchor",
-	"fa-anchor",
-	"fa-bolt",
-	"fa-bolt",
-	"fa-cube",
-	"fa-cube",
-	"fa-leaf",
-	"fa-leaf",
-	"fa-bicycle",
-	"fa-bicycle",
-	"fa-bomb",
-	"fa-bomb"
+let timeCounter = document.getElementById('time-counter'),
+    s = 0, m = 0, h = 0;
+	move = 0,
+	open = [], // array list for the cards that are turned (`.open`)
+	match = []; // array list for the pairs of cards that have the same symbol (`.match`)
+
+	arrays = [
+		"fa-diamond",
+		"fa-diamond",
+		"fa-paper-plane-o",
+		"fa-paper-plane-o",
+		"fa-anchor",
+		"fa-anchor",
+		"fa-bolt",
+		"fa-bolt",
+		"fa-cube",
+		"fa-cube",
+		"fa-leaf",
+		"fa-leaf",
+		"fa-bicycle",
+		"fa-bicycle",
+		"fa-bomb",
+		"fa-bomb"
 	];
-
-let open = []; // array list for the cards that are turned (`.open`)
-let match = []; // array list for the pairs of cards that have the same symbol (`.match`)
-
-let move = 0;
-	
-let starNum = document.querySelector('.stars');
-let moveNum = document.querySelector('.moves');
 
 /*
 Shuffle function from http://stackoverflow.com/a/2450976
@@ -81,10 +82,7 @@ const generate = function () {
 	deck.appendChild(fragment);
 }
 
-let timeCounter = document.getElementById('time-counter'),
-    s = 0, m = 0, h = 0;
-
-function myTimer() {
+let timer = function myTimer() {
     s++;
     if (s >= 60) {
         s = 0;
@@ -99,11 +97,6 @@ function myTimer() {
 
     setTimeout(myTimer, 1000);
 }
-/*function timer() {
-    t = setTimeout(timer, 1000);
-}
-timer();*/
-setTimeout(myTimer, 1000);
 
 // Creates a star icon on the move counter (.stars)
 const starCounter = function () {
@@ -121,10 +114,19 @@ const moveCounter = function () {
 }
 				
 // display victory message after the 16 cards are matched, with a wait of 800 milliseconds
-const victory = function  () {
+const victory = function () {
 	if (document.getElementsByClassName('match').length === 16) {
+		let gameEnd = Date.now();
+		//function totalGameTime () {
+		let gameTime = gameEnd - gameStart;
+		//}
+		//totalGameTime();
+		let gameTimeTemp = gameTime /1000;
+		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
+		/*totalTime < 3600 ? (totalTime >= 60 ? (totalTime/60/60.toFixed() + "h" + ((totalTime % 60) * 100).toFixed(0) + "m" + : totalTime);*/
+
 		setTimeout(function() {
-			window.alert("Congratulations! You took " + timeVariable + " to finished the game! And Your rating was" + document.getElementsByClassName('fa-star').length + "!\nPlay again?");
+			window.alert("Congratulations! You took " + totalTime + " to finished the game! And Your rating was " + document.getElementsByClassName('fa-star').length + "!\n\nPlay again?");
 		}, 800);
 
 		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
@@ -138,10 +140,13 @@ const victory = function  () {
 const restart = function () {
 	
 	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
+	s = 0;
+	m = 0;
+	h = 0;
 	move = 0;
 	deck.innerHTML = "";
 	starNum.innerHTML = "";
-	moveNum.innerHTML = "";
+	moveNum.innerHTML = "0 Moves";
 
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
 	open.splice(0, open.length);
@@ -151,8 +156,6 @@ const restart = function () {
 	generate();
 	game();
 }
-
-const everyCard = document.getElementsByClassName('card');
 
 const game = function() {
 	for (let i = 0; i < everyCard.length; i++) {
@@ -203,8 +206,14 @@ const game = function() {
 	}
 }
 
+// stores the time the game started
+let gameStart = Date.now();
+
 // calls function to create deck of shuffled cards
 generate();
+
+// runs timer function after 1 second
+setTimeout(timer, 1000);
 
 // starts the game's logic
 game();
