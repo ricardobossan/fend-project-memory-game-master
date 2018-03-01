@@ -1,19 +1,23 @@
 /*
 * TODO: Adjust code to meet the project rubric (Project Specification):
-* Congratulations Pop Up: 
+OK * Congratulations Pop Up: 
 OK ** Ask if the player wants to play again OK
-** How much time it took the player to finish the game
-* Moves counter
-** fix it, so it won't rely wrongly on the star counter anymore
-** What the star rating was
-* Restart Button:
-** restart timer
-** restart star rating
-* Star Rating:
-** starts withh 3 stars, changes to two and then to one. The number of moves to change rating is up to me
-* Timer:
-** Timer is displayed at the begining of the game and starts to count
-** When the player wins, the timer stops
+OK ** How much time it took the player to finish the game
+OK * Moves counter
+OK ** fix it, so it won't rely wrongly on the star counter anymore
+OK ** What the star rating was
+OK * Restart Button:
+OK ** restart timer
+OK ** restart star rating
+OK * Star Rating:
+** OK starts withh 3 stars, changes to two and then to one. The number of moves to change rating is up to me
+OK * Timer:
+OK ** Timer is displayed at the begining of the game and starts to count
+OK ** When the player wins, the timer stops
+
+							DONE ABOVE
+---------------------------------------------------------------------
+
 * Usability: 
 ** should with modern desktop, tablet and phone browsers // Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 * README:
@@ -33,7 +37,8 @@ let timeCounter = document.getElementById('time-counter'),
 	move = 0,
 	open = [], // array list for the cards that are turned (`.open`)
 	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
-	everyStar = document.getElementsByClassName('fa-star');
+	everyStar = document.getElementsByClassName('fa-star'),
+	b = "";
 
 	arrays = [
 		"fa-diamond",
@@ -83,6 +88,7 @@ const generate = function () {
 	deck.appendChild(fragment);
 }
 
+// Logic for timer, located on top-right corner
 let timer = function myTimer() {
     s++;
     if (s >= 60) {
@@ -95,7 +101,7 @@ let timer = function myTimer() {
     }
   
     timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
-
+// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
     setTimeout(myTimer, 1000);
 }
 
@@ -108,13 +114,36 @@ const moveCounter = function () {
 // If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
 const starCounter = function () {
 	if (move === 14) {
-		starNum.firstElementChild.outerHTML = "";
+		starNum.firstElementChild.outerHTML = "";			
 	}
 	if (move === 19) {
-		starNum.firstElementChild.outerHTML = "";
+		starNum.firstElementChild.outerHTML = "";		
 	}
 	if (move === 24) {
-		starNum.firstElementChild.outerHTML = "";
+		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
+	}
+}
+
+let blinking = function () {
+	if (move >= 14 && move < 19){
+		b = starNum.classList.toggle('blink-1');
+    b++;
+    return b;
+	}
+}
+
+let blinking2 = function () {
+	if (move >= 19 && move < 24){
+		starNum.classList.remove('blink-1');
+		b = starNum.classList.toggle('blink-2');
+	    b++;
+    	return b;
+	}
+	if (move === 24){
+		starNum.classList.remove('blink-3');
+		b = starNum.classList.toggle('blink-3');
+	    b++;
+	    return b;
 	}
 }
 
@@ -123,8 +152,7 @@ const victory = function () {
 	if (document.getElementsByClassName('match').length === 16) {
 		let gameEnd = Date.now();
 		//function totalGameTime () {
-		let gameTime = gameEnd - gameStart;
-		//}
+		let gameTime = gameEnd - gameStart;		
 		//totalGameTime();
 		let gameTimeTemp = gameTime /1000;
 		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
@@ -155,7 +183,8 @@ const restart = function () {
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
 	open.splice(0, open.length);
 	match.splice(0, match.length);
-	
+	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
+		
 	//generate new shuffled array and restarts game
 	generate();
 	game();
@@ -193,8 +222,9 @@ const game = function() {
 						// if 16 cards are matching its symbols, displays victory alert box
 						victory();
 					}
+
 /*
-				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.
+				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.	
 				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
 */
 				window.addEventListener('click', function () {
@@ -218,6 +248,11 @@ generate();
 
 // runs timer function after 1 second
 setTimeout(timer, 1000);
+
+// if 2 or 1 stars, blinks red, if 0, stays red
+setInterval (blinking, 1900);
+
+setInterval (blinking2, 600);
 
 // starts the game's logic
 game();
