@@ -96,7 +96,7 @@ const generate = function () {
 		let li = document.createElement('li');
 		li.classList = "card";
 		li.innerHTML = `<i class="fa ${array}"><i/>`;
-		li.classList.add("open", "match");
+		li.classList.add("open", "show");
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
