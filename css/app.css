@@ -144,6 +144,38 @@ h1 {
 
 }
 
+.fa-diamond {
+    color: yellow;
+}
+
+.fa-paper-plane-o {
+    color: #F5ECCE;
+}
+
+.fa-anchor {
+    color: blue;
+}
+
+.fa-bolt {
+    color: purple;
+}
+
+.fa-cube {
+    color: red;
+}
+
+.fa-leaf {
+    color: lightgreen;
+}
+
+.fa-bicycle {
+    color: orange;
+}
+
+.fa-bomb {
+    color: black;
+}
+
 /* 
 Animations
  */

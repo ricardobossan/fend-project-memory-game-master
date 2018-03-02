@@ -76,6 +76,18 @@ function shuffle() {
     return arrays;
 }
 
+	// shows and then hides all card's symbols
+function hideCards () {
+/*	document.getElementsByClassName('card').classList.toggle("open");
+	document.getElementsByClassName('card').classList.toggle("show");
+
+*/	setTimeout(function() {
+	let element = 0;
+		for (let t = 0; t < document.querySelectorAll('.card').length; t++) {document.querySelector('.deck').children[t].classList.remove("open", "show")};;
+/*		document.getElementsByClassName('card').classList.toggle("show");*/
+	}, 4000);
+}
+
 // Creates a shuffled deck (`.deck`)
 const generate = function () {
 	let shuffledArrays = shuffle(arrays);
@@ -84,9 +96,12 @@ const generate = function () {
 		let li = document.createElement('li');
 		li.classList = "card";
 		li.innerHTML = `<i class="fa ${array}"><i/>`;
+		li.classList.add("open", "match");
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
+
+	hideCards();
 }
 
 // Logic for timer, located on top-right corner
@@ -193,7 +208,7 @@ const restart = function () {
 }
 
 const game = function() {
-			
+
 	// stores the time the game started
 	gameStart = Date.now();
 
