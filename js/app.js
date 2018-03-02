@@ -34,6 +34,7 @@ const deck = document.querySelector('.deck'),
 
 let timeCounter = document.getElementById('time-counter'),
     s = 0, m = 0, h = 0;
+    gameStart = "",
 	move = 0,
 	open = [], // array list for the cards that are turned (`.open`)
 	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
@@ -177,6 +178,7 @@ const restart = function () {
 	h = 0;
 	move = 0;
 	deck.innerHTML = "";
+	timerCounter = "00 : 00 : 00";
 	starNum.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
 	moveNum.innerHTML = "0 Moves";
 
@@ -191,6 +193,10 @@ const restart = function () {
 }
 
 const game = function() {
+			
+	// stores the time the game started
+	gameStart = Date.now();
+
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
 
@@ -239,9 +245,6 @@ const game = function() {
 		});
 	}
 }
-
-// stores the time the game started
-let gameStart = Date.now();
 
 // calls function to create deck of shuffled cards
 generate();
