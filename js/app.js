@@ -19,7 +19,9 @@ OK ** When the player wins, the timer stops
 ---------------------------------------------------------------------
 
 * Usability: 
-** should with modern desktop, tablet and phone browsers // Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
+NOW/HEAD ** create dynamicaly generated easy, normal and hard dificulty, and respective boards, with 16, 25 and 36 cards
+OK ** should with modern desktop, tablet and phone browsers //
+ Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 * README:
 ** detail the game and all dependencies
 * Comments:
@@ -76,19 +78,15 @@ function shuffle() {
     return arrays;
 }
 
-	// shows and then hides all card's symbols
+// Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function)
 function hideCards () {
-/*	document.getElementsByClassName('card').classList.toggle("open");
-	document.getElementsByClassName('card').classList.toggle("show");
-
-*/	setTimeout(function() {
+	setTimeout(function() {
 	let element = 0;
 		for (let t = 0; t < document.querySelectorAll('.card').length; t++) {document.querySelector('.deck').children[t].classList.remove("open", "show")};;
-/*		document.getElementsByClassName('card').classList.toggle("show");*/
 	}, 4000);
 }
 
-// Creates a shuffled deck (`.deck`)
+// Creates a shuffled deck (`.deck`), displays all cards symbols, then hides then with the `hideCards()` callback function
 const generate = function () {
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
