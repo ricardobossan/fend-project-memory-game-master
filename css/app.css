@@ -5,7 +5,7 @@ html {
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+    box-sizing: inherit;    
 }
 
 html,
@@ -17,10 +17,19 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: 100px #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    /* background-position: 50% 0%;
+    background-size: 1920px 1080px;
+    background-repeat: no-repeat;
     font-family: 'Coda', cursive;
+    position: absolute;
+    background-clip: border-box;
+     */}
+/* 
+header {
+    color: #FFF;
 }
-
+ */
 .container {
     display: flex;
     justify-content: center;
@@ -40,8 +49,16 @@ h1 {
 .deck {
     width: 660px;
     min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    background: 100% #ffffff url('../img/aquarium.jpg'); /* Background pattern from Subtle Patterns */
+    background-position: 0% 0%;
+    background-size:  105% 105%;
+    background-repeat: no-repeat;
+    font-family: 'Coda', cursive;
+    background-clip: border-box;
+
+    /* background:* linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%) */;
     padding: 32px;
+    border: solid 1px black;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
@@ -52,11 +69,11 @@ h1 {
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    height: 100px;
+    width: 100px;
+    margin: 12.5px;
     background: linear-gradient(160deg, #3C384D 0%, #ffffff 450%);
     font-size: 0;
-    color: #ffffff;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
@@ -89,7 +106,6 @@ h1 {
  */
 
 .score-panel {
-
     text-align: center;
     width: 660px;
     padding-left: 32px;
