@@ -14,13 +14,13 @@ OK * Star Rating:
 OK * Timer:
 OK ** Timer is displayed at the begining of the game and starts to count
 OK ** When the player wins, the timer stops
+ok * Usability: 
+ok ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, with 16, 20 and 24 cards
+OK ** should with modern desktop, tablet and phone browsers //
 
 							DONE ABOVE
 ---------------------------------------------------------------------
 
-* Usability: 
-NOW/HEAD ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, with 16, 20 and 24 cards
-OK ** should with modern desktop, tablet and phone browsers //
  Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 * README:
 ** detail the game and all dependencies
