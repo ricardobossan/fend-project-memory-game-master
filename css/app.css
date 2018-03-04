@@ -18,18 +18,8 @@ body {
 
 body {
     background: 100% #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    /* background-position: 50% 0%;
-    background-size: 1920px 1080px;
-    background-repeat: no-repeat;
-    font-family: 'Coda', cursive;
-    position: absolute;
-    background-clip: border-box;
-     */}
-/* 
-header {
-    color: #FFF;
-}
- */
+     }
+
 .container {
     display: flex;
     justify-content: center;
@@ -150,6 +140,10 @@ h1 {
     background: red;
     box-shadow: 0 0 10px 
 }
+
+/* 
+Modify colors for the symbols displayed in the cards
+ */
 
 .fa-diamond {
     color: yellow;
