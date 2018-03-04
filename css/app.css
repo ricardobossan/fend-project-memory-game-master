@@ -83,13 +83,13 @@ h1 {
 }
 
 .deck .card.show {
-    font-size: 33px;
+    font-size: 30px;
 }
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
-    font-size: 33px;
+    font-size: 30px;
     animation: flash-pnk 0.5s;
 }
 
