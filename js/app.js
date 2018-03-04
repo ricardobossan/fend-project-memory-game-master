@@ -19,7 +19,7 @@ OK ** When the player wins, the timer stops
 ---------------------------------------------------------------------
 
 * Usability: 
-NOW/HEAD ** create dynamicaly generated easy, normal and hard dificulty, and respective boards, with 16, 25 and 36 cards
+NOW/HEAD ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, with 16, 20 and 24 cards
 OK ** should with modern desktop, tablet and phone browsers //
  Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 * README:
@@ -27,6 +27,11 @@ OK ** should with modern desktop, tablet and phone browsers //
 * Comments:
 ** comment adjustment to Project Specifications
 * Javascript Styleguide: Check it all over again
+*/
+
+
+/*
+Global Variables
 */
 
 const deck = document.querySelector('.deck'),
@@ -42,29 +47,7 @@ let timeCounter = document.getElementById('time-counter'),
 	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
 	everyStar = document.getElementsByClassName('fa-star'),
 	b = "",
-	dificulty = "",
-	arrays = [];
-
-/*if (dificulty === easy) {*/
-/*	arrays = [
-		"fa-diamond",
-		"fa-diamond",
-		"fa-paper-plane-o",
-		"fa-paper-plane-o",
-		"fa-anchor",
-		"fa-anchor",
-		"fa-bolt",
-		"fa-bolt",
-		"fa-cube",
-		"fa-cube",
-		"fa-leaf",
-		"fa-leaf",
-		"fa-bicycle",
-		"fa-bicycle",
-		"fa-bomb",
-		"fa-bomb"
-	]
-*//* else if (dificulty === normal) {
+	difficulty = "easy",
 	arrays = [
 		"fa-diamond",
 		"fa-diamond",
@@ -81,45 +64,97 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-bicycle",
 		"fa-bicycle",
 		"fa-bomb",
-		"fa-bomb",
-		"fa-globe",
-		"fa-globe",
-		"fa-fighter-jet",
-		"fa-fighter-jet"
-	] 
-} else if (dificulty === hard) {
-*/	arrays = [
-		"fa-diamond",
-		"fa-diamond",
-		"fa-paper-plane-o",
-		"fa-paper-plane-o",
-		"fa-anchor",
-		"fa-anchor",
-		"fa-bolt",
-		"fa-bolt",
-		"fa-cube",
-		"fa-cube",
-		"fa-leaf",
-		"fa-leaf",
-		"fa-bicycle",
-		"fa-bicycle",
-		"fa-bomb",
-		"fa-bomb",
-		"fa-globe",
-		"fa-globe",
-		"fa-fighter-jet",
-		"fa-fighter-jet",
-		"fa-heart",
-		"fa-heart",
-		"fa-gift",
-		"fa-gift"
-	] 
-//}
+		"fa-bomb"
+	];
+
+/*
+Functions
+*/
+
+let isEasy = function () {
+	difficulty = "easy";
+	arrays = [
+			"fa-diamond",
+			"fa-diamond",
+			"fa-paper-plane-o",
+			"fa-paper-plane-o",
+			"fa-anchor",
+			"fa-anchor",
+			"fa-bolt",
+			"fa-bolt",
+			"fa-cube",
+			"fa-cube",
+			"fa-leaf",
+			"fa-leaf",
+			"fa-bicycle",
+			"fa-bicycle",
+			"fa-bomb",
+			"fa-bomb"
+		];
+	restart();}
+
+let isNormal = function () {
+	difficulty = "normal";
+	arrays = [
+			"fa-diamond",
+			"fa-diamond",
+			"fa-paper-plane-o",
+			"fa-paper-plane-o",
+			"fa-anchor",
+			"fa-anchor",
+			"fa-bolt",
+			"fa-bolt",
+			"fa-cube",
+			"fa-cube",
+			"fa-leaf",
+			"fa-leaf",
+			"fa-bicycle",
+			"fa-bicycle",
+			"fa-bomb",
+			"fa-bomb",
+			"fa-globe",
+			"fa-globe",
+			"fa-fighter-jet",
+			"fa-fighter-jet"
+		];
+	restart();}
+
+let isHard = function () {
+	difficulty = "hard";
+	arrays = [
+			"fa-diamond",
+			"fa-diamond",
+			"fa-paper-plane-o",
+			"fa-paper-plane-o",
+			"fa-anchor",
+			"fa-anchor",
+			"fa-bolt",
+			"fa-bolt",
+			"fa-cube",
+			"fa-cube",
+			"fa-leaf",
+			"fa-leaf",
+			"fa-bicycle",
+			"fa-bicycle",
+			"fa-bomb",
+			"fa-bomb",
+			"fa-globe",
+			"fa-globe",
+			"fa-fighter-jet",
+			"fa-fighter-jet",
+			"fa-heart",
+			"fa-heart",
+			"fa-gift",
+			"fa-gift"
+		];
+	restart();
+}
 
 /*
 Shuffle function from http://stackoverflow.com/a/2450976
 Fisher-Yates Algoritm (Udacity's FEND version)
 */
+
 function shuffle() {
 	let currentIndex = arrays.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
@@ -181,19 +216,20 @@ const moveCounter = function () {
 
 // If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
 const starCounter = function () {
-	if (move === 14) {
+	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 16 : move === 18) {
 		starNum.firstElementChild.outerHTML = "";			
 	}
-	if (move === 19) {
+	if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 21 : move === 23) {
 		starNum.firstElementChild.outerHTML = "";		
 	}
-	if (move === 24) {
+	if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 26 : move === 28) {
 		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
 	}
 }
 
 let blinking = function () {
-	if (move >= 14 && move < 19){
+	if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 16 && move < 21 : move >= 18 /*&& move < 23*/) {
+		starNum.classList.remove('blink-1');
 		b = starNum.classList.toggle('blink-1');
     b++;
     return b;
@@ -201,13 +237,13 @@ let blinking = function () {
 }
 
 let blinking2 = function () {
-	if (move >= 19 && move < 24){
+	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty === "normal" ? move >= 21 && move < 26 : move >= 23 /*&& move < 28*/){
 		starNum.classList.remove('blink-1');
 		b = starNum.classList.toggle('blink-2');
 	    b++;
     	return b;
 	}
-	if (move === 24){
+	if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 26 : move >= 28){
 		starNum.classList.remove('blink-3');
 		b = starNum.classList.toggle('blink-3');
 	    b++;
@@ -215,9 +251,9 @@ let blinking2 = function () {
 	}
 }
 
-// display victory message after the 16 cards are matched, with a wait of 800 milliseconds
+// display victory message after the array.length cards are matched, with a wait of 800 milliseconds
 const victory = function () {
-	if (document.getElementsByClassName('match').length === 16) {
+	if (document.getElementsByClassName('match').length === arrays.length) {
 		let gameEnd = Date.now();
 		//function totalGameTime () {
 		let gameTime = gameEnd - gameStart;		
@@ -229,10 +265,10 @@ const victory = function () {
 			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + "!\n\nPlay again?");
 		}, 800);
 
-		// if 16 cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
+		// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
 		setTimeout(function() {
 			restart();
-		}, 2000);
+		}, 1000);
 	};
 }
 
@@ -269,7 +305,12 @@ const game = function() {
 
 			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
 			if (!open.includes(everyCard.item(i))) {
-
+				if (open.length >= 2) {
+					open[0].classList.remove("open", "show");
+					open[1].classList.remove("open", "show");
+					/*open[2].classList.remove("open", "show");*/
+					open.splice(0, 3);
+				}
 				// Reveals each card on click, adding them to the `open` array list
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
@@ -292,7 +333,7 @@ const game = function() {
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
 
-						// if 16 cards are matching its symbols, displays victory alert box
+						// if array.length cards are matching its symbols, displays victory alert box
 						victory();
 					}
 
@@ -300,13 +341,8 @@ const game = function() {
 				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.	
 				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
 */
-				window.addEventListener('click', function () {
-					if (open.length > 2) {
-						open[0].classList.remove("open", "show");
-						open[1].classList.remove("open", "show");
-						open[2].classList.remove("open", "show");
-						open.splice(0, 3);
-				}});
+				/*window.addEventListener('click', function () {*/
+					/*});*/
 				}
 			}
 		});
@@ -316,6 +352,14 @@ const game = function() {
 // calls function to create deck of shuffled cards
 generate();
 
+
+document.getElementById('easy').addEventListener('click', isEasy);
+document.getElementById('normal').addEventListener('click', isNormal);
+document.getElementById('hard').addEventListener('click', isHard);
+
+
+//chooseDifficulty();
+
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
@@ -323,6 +367,7 @@ setTimeout(timer, 1000);
 setInterval (blinking, 1900);
 
 setInterval (blinking2, 600);
+
 
 // starts the game's logic
 game();
