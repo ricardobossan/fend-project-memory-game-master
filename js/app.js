@@ -41,9 +41,12 @@ let timeCounter = document.getElementById('time-counter'),
 	open = [], // array list for the cards that are turned (`.open`)
 	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
 	everyStar = document.getElementsByClassName('fa-star'),
-	b = "";
+	b = "",
+	dificulty = "",
+	arrays = [];
 
-	arrays = [
+/*if (dificulty === easy) {*/
+/*	arrays = [
 		"fa-diamond",
 		"fa-diamond",
 		"fa-paper-plane-o",
@@ -60,7 +63,58 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-bicycle",
 		"fa-bomb",
 		"fa-bomb"
-	];
+	]
+*//* else if (dificulty === normal) {
+	arrays = [
+		"fa-diamond",
+		"fa-diamond",
+		"fa-paper-plane-o",
+		"fa-paper-plane-o",
+		"fa-anchor",
+		"fa-anchor",
+		"fa-bolt",
+		"fa-bolt",
+		"fa-cube",
+		"fa-cube",
+		"fa-leaf",
+		"fa-leaf",
+		"fa-bicycle",
+		"fa-bicycle",
+		"fa-bomb",
+		"fa-bomb",
+		"fa-globe",
+		"fa-globe",
+		"fa-fighter-jet",
+		"fa-fighter-jet"
+	] 
+} else if (dificulty === hard) {
+*/	arrays = [
+		"fa-diamond",
+		"fa-diamond",
+		"fa-paper-plane-o",
+		"fa-paper-plane-o",
+		"fa-anchor",
+		"fa-anchor",
+		"fa-bolt",
+		"fa-bolt",
+		"fa-cube",
+		"fa-cube",
+		"fa-leaf",
+		"fa-leaf",
+		"fa-bicycle",
+		"fa-bicycle",
+		"fa-bomb",
+		"fa-bomb",
+		"fa-globe",
+		"fa-globe",
+		"fa-fighter-jet",
+		"fa-fighter-jet",
+		"fa-heart",
+		"fa-heart",
+		"fa-gift",
+		"fa-gift"
+	] 
+//}
 
 /*
 Shuffle function from http://stackoverflow.com/a/2450976

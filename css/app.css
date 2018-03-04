@@ -148,8 +148,7 @@ h1 {
 
 .blink-3 {
     background: red;
-    box-shadow: 0 0 10px 3px red;
-
+    box-shadow: 0 0 10px 
 }
 
 .fa-diamond {
@@ -169,7 +168,7 @@ h1 {
 }
 
 .fa-cube {
-    color: red;
+    color: orange;
 }
 
 .fa-leaf {
@@ -182,6 +181,24 @@ h1 {
 
 .fa-bomb {
     color: black;
+}
+
+.fa-globe {
+    color: green ;
+}
+
+.fa-fighter-jet {
+    color: grey;
+    font-weight: bold;
+}
+
+.fa-heart {
+    color: red;
+}
+
+.fa-gift {
+    color: pink;
+    font-weight: bold;
 }
 
 /* 
