@@ -59,7 +59,7 @@ h1 {
 }
 
 .buttons-row {
-    height: 2.2em;
+    height: 1.8em;
     display: flex;
     flex-direction: row;
     justify-content: space-around;    
@@ -68,7 +68,7 @@ h1 {
 .arrows {
     visibility: hidden;
     color: #ff00Bf;;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -273,12 +273,12 @@ Animations
 
 @keyframes dance {
     15% {
-        color: #FFF;
+ /*     color: #FFF; */
     }
     100% {
         /* color: #ff00Bf; */
-        line-height: 1.2em;
-     /*    transform: rotateY(360deg); */
+        line-height: 0.6em;
+        /* transform: rotateY(360deg); */
     }
 
 }
