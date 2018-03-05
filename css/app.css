@@ -20,6 +20,10 @@ body {
     background: 100% #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
      }
 
+table {
+    width: 370px;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -30,7 +34,12 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    margin-bottom: 10px;
 
+}
+
+.difficulty-title {
+    padding-top: 23px;
 }
 
 /*
@@ -47,6 +56,24 @@ h1 {
     align-items: center;
     margin: 10px 0 30px 0;
     border-radius: 8px;
+}
+
+.buttons-row {
+    height: 2.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;    
+}
+
+.arrows {
+    visibility: hidden;
+    color: #ff00Bf;;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.buttons-flex {
+    display: flex;
 }
 
 .choose-difficulty button {
@@ -223,6 +250,11 @@ Modify colors for the symbols displayed in the cards
 /* 
 Animations
  */
+
+.arrow-dancing {
+    color: #ff00Bf;
+    animation: dance 1s;
+}
  
 .blink-1 {
     animation: blink 1.9s;
@@ -237,6 +269,18 @@ Animations
     box-shadow: red 1px 1px 13px 3px;
     border-radius: 4px;
     padding: 3px;
+}
+
+@keyframes dance {
+    15% {
+        color: #FFF;
+    }
+    100% {
+        /* color: #ff00Bf; */
+        line-height: 1.2em;
+     /*    transform: rotateY(360deg); */
+    }
+
 }
 
 @keyframes flash-light-gry {
@@ -265,15 +309,15 @@ Animations
         background-color: #00Bfff;
     }
     100% {
-        background-color: #ff00Bf ;
+        background-color: #ff00Bf;
         transform: rotateY(360deg);
     }
 }
 
 @keyframes blink {
     0% {
-        background: red;
-/*         box-shadow: 0 0 10px 3px red; */
+        background-color: red;
+        box-shadow: 0 0 10px 3px red;
     }
     100% {
         background-color: #FFF;

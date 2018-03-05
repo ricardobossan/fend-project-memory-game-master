@@ -14,14 +14,15 @@ OK * Star Rating:
 OK * Timer:
 OK ** Timer is displayed at the begining of the game and starts to count
 OK ** When the player wins, the timer stops
-ok * Usability: 
-ok ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, with 16, 20 and 24 cards
-OK ** should with modern desktop, tablet and phone browsers //
 
 							DONE ABOVE
 ---------------------------------------------------------------------
 
- Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
+* Usability: 
+** create dynamicaly generated easy, normal and hard difficulty, and respective boards, easy : 14, 19 and 24 cards; normal: 
+OK ** should with modern desktop, tablet and phone browsers 
+OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
+* Fix total time of game that displays on the end (.totalTime). When `.totalTime` > 60s, it displays minutes:%seconds (e.g. 01 : 78, which menas 1 minute and 78% of another minute)
 * README:
 ** detail the game and all dependencies
 * Comments:
@@ -48,6 +49,7 @@ let timeCounter = document.getElementById('time-counter'),
 	everyStar = document.getElementsByClassName('fa-star'),
 	b = "",
 	difficulty = "easy",
+	arrowStyle = document.getElementsByClassName('arrows'),
 	arrays = [
 		"fa-diamond",
 		"fa-diamond",
@@ -70,9 +72,14 @@ let timeCounter = document.getElementById('time-counter'),
 /*
 Functions
 */
+arrowStyle.item(0).style.visibility = 'visible';
 
 let isEasy = function () {
 	difficulty = "easy";
+	arrowStyle.item(1).style.visibility = 'hidden';
+	arrowStyle.item(2).style.visibility = 'hidden';
+
+	arrowStyle.item(0).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -91,10 +98,14 @@ let isEasy = function () {
 			"fa-bomb",
 			"fa-bomb"
 		];
-	restart();}
+	restart();
+}
 
 let isNormal = function () {
 	difficulty = "normal";
+	arrowStyle.item(0).style.visibility = 'hidden';
+	arrowStyle.item(2).style.visibility = 'hidden';
+	arrowStyle.item(1).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -117,10 +128,14 @@ let isNormal = function () {
 			"fa-fighter-jet",
 			"fa-fighter-jet"
 		];
-	restart();}
+	restart();
+}
 
 let isHard = function () {
 	difficulty = "hard";
+	arrowStyle.item(0).style.visibility = 'hidden';
+	arrowStyle.item(1).style.visibility = 'hidden';
+	arrowStyle.item(2).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -216,38 +231,38 @@ const moveCounter = function () {
 
 // If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
 const starCounter = function () {
-	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 16 : move === 18) {
+	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
 		starNum.firstElementChild.outerHTML = "";			
 	}
-	if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 21 : move === 23) {
+	if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 25 : move === 30) {
 		starNum.firstElementChild.outerHTML = "";		
 	}
-	if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 26 : move === 28) {
+	if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35) {
 		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
 	}
 }
 
+const dancingArrow = function() {
+	arrowStyle.item(0).classList.toggle('arrow-dancing');
+	arrowStyle.item(1).classList.toggle('arrow-dancing');
+	arrowStyle.item(2).classList.toggle('arrow-dancing');
+
+}
+
 let blinking = function () {
-	if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 16 && move < 21 : move >= 18 /*&& move < 23*/) {
-		starNum.classList.remove('blink-1');
-		b = starNum.classList.toggle('blink-1');
-    b++;
-    return b;
-	}
+	if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 19 && move < 25 : move >= 29) {
+		starNum.classList.toggle('blink-1');
+	}	
 }
 
 let blinking2 = function () {
-	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty === "normal" ? move >= 21 && move < 26 : move >= 23 /*&& move < 28*/){
+	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty === "normal" ? move >= 25 && move < 30 : move >= 30){
 		starNum.classList.remove('blink-1');
-		b = starNum.classList.toggle('blink-2');
-	    b++;
-    	return b;
+		starNum.classList.toggle('blink-2');
 	}
-	if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 26 : move >= 28){
+	if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 30 : move >= 35){
 		starNum.classList.remove('blink-3');
-		b = starNum.classList.toggle('blink-3');
-	    b++;
-	    return b;
+		starNum.classList.toggle('blink-3');
 	}
 }
 
@@ -262,7 +277,7 @@ const victory = function () {
 		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
 	
 		setTimeout(function() {
-			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + "!\n\nPlay again?");
+			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
 		}, 800);
 
 		// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
@@ -362,6 +377,8 @@ document.getElementById('hard').addEventListener('click', isHard);
 
 // runs timer function after 1 second
 setTimeout(timer, 1000);
+
+setInterval (dancingArrow, 1000);
 
 // if 2 or 1 stars, blinks red, if 0, stays red
 setInterval (blinking, 1900);
