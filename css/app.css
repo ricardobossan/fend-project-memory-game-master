@@ -87,6 +87,7 @@ h1 {
 
 .choose-difficulty button:active {
     background-color: #ff00Bf;
+    height: -100px;
 }
 
 .deck {

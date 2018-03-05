@@ -14,14 +14,17 @@ OK * Star Rating:
 OK * Timer:
 OK ** Timer is displayed at the begining of the game and starts to count
 OK ** When the player wins, the timer stops
+OK * Usability: 
+OK ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, easy : 14, 19 and 24 cards; normal: 
+OK ** should with modern desktop, tablet and phone browsers 
+OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 
 							DONE ABOVE
 ---------------------------------------------------------------------
 
-* Usability: 
-** create dynamicaly generated easy, normal and hard difficulty, and respective boards, easy : 14, 19 and 24 cards; normal: 
-OK ** should with modern desktop, tablet and phone browsers 
-OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
+//
+// TODO
+//
 * Fix total time of game that displays on the end (.totalTime). When `.totalTime` > 60s, it displays minutes:%seconds (e.g. 01 : 78, which menas 1 minute and 78% of another minute)
 * README:
 ** detail the game and all dependencies
