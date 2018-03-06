@@ -19,6 +19,10 @@ OK ** create dynamicaly generated easy, normal and hard difficulty, and respecti
 OK ** should with modern desktop, tablet and phone browsers 
 OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 OK * Fix total time of game that displays on the end (.totalTime). When `.totalTime` > 60s, it displays minutes:%seconds (e.g. 01 : 78, which menas 1 minute and 78% of another minute)
+OK * Comments:
+OK ** comment adjustment to Project Specifications
+OK * README:
+OK ** detail the game and all dependencies
 
 							DONE ABOVE
 ---------------------------------------------------------------------
@@ -26,11 +30,8 @@ OK * Fix total time of game that displays on the end (.totalTime). When `.totalT
 //
 // TODO
 //
-* Comments:
-** comment adjustment to Project Specifications
-* Javascript Styleguide: Check it all over again
-* README:
-** detail the game and all dependencies
+* 
+Javascript Styleguide: Check it all over again
 */
 
 
