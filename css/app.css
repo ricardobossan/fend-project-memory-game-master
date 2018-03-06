@@ -65,7 +65,7 @@ h1 {
     justify-content: space-around;    
 }
 
-.arrows {
+.hands {
     visibility: hidden;
     color: #ff00Bf;;
     font-size: 25px;
@@ -252,7 +252,7 @@ Modify colors for the symbols displayed in the cards
 Animations
  */
 
-.arrow-dancing {
+.hand-dancing {
     color: #ff00Bf;
     animation: dance 1s;
 }

@@ -18,6 +18,7 @@ OK * Usability:
 OK ** create dynamicaly generated easy, normal and hard difficulty, and respective boards, easy : 14, 19 and 24 cards; normal: 
 OK ** should with modern desktop, tablet and phone browsers 
 OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
+OK * Fix total time of game that displays on the end (.totalTime). When `.totalTime` > 60s, it displays minutes:%seconds (e.g. 01 : 78, which menas 1 minute and 78% of another minute)
 
 							DONE ABOVE
 ---------------------------------------------------------------------
@@ -25,12 +26,11 @@ OK ** Motomaxx, Moto G5 Plus e o de Amanda não funcionam!
 //
 // TODO
 //
-* Fix total time of game that displays on the end (.totalTime). When `.totalTime` > 60s, it displays minutes:%seconds (e.g. 01 : 78, which menas 1 minute and 78% of another minute)
-* README:
-** detail the game and all dependencies
 * Comments:
 ** comment adjustment to Project Specifications
 * Javascript Styleguide: Check it all over again
+* README:
+** detail the game and all dependencies
 */
 
 
@@ -52,7 +52,8 @@ let timeCounter = document.getElementById('time-counter'),
 	everyStar = document.getElementsByClassName('fa-star'),
 	b = "",
 	difficulty = "easy",
-	arrowStyle = document.getElementsByClassName('arrows'),
+	handStyle = document.getElementsByClassName('hands'),
+	// game starts at easy difficulty
 	arrays = [
 		"fa-diamond",
 		"fa-diamond",
@@ -66,8 +67,8 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-cube",
 		"fa-leaf",
 		"fa-leaf",
-		"fa-bicycle",
-		"fa-bicycle",
+		"fa-heart",
+		"fa-heart",		
 		"fa-bomb",
 		"fa-bomb"
 	];
@@ -75,14 +76,16 @@ let timeCounter = document.getElementById('time-counter'),
 /*
 Functions
 */
-arrowStyle.item(0).style.visibility = 'visible';
+
+// makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
+handStyle.item(0).style.visibility = 'visible';
 
 let isEasy = function () {
 	difficulty = "easy";
-	arrowStyle.item(1).style.visibility = 'hidden';
-	arrowStyle.item(2).style.visibility = 'hidden';
+	handStyle.item(1).style.visibility = 'hidden';
+	handStyle.item(2).style.visibility = 'hidden';
 
-	arrowStyle.item(0).style.visibility = 'visible';
+	handStyle.item(0).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -96,8 +99,8 @@ let isEasy = function () {
 			"fa-cube",
 			"fa-leaf",
 			"fa-leaf",
-			"fa-bicycle",
-			"fa-bicycle",
+			"fa-heart",
+			"fa-heart",
 			"fa-bomb",
 			"fa-bomb"
 		];
@@ -106,9 +109,9 @@ let isEasy = function () {
 
 let isNormal = function () {
 	difficulty = "normal";
-	arrowStyle.item(0).style.visibility = 'hidden';
-	arrowStyle.item(2).style.visibility = 'hidden';
-	arrowStyle.item(1).style.visibility = 'visible';
+	handStyle.item(0).style.visibility = 'hidden';
+	handStyle.item(2).style.visibility = 'hidden';
+	handStyle.item(1).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -136,9 +139,9 @@ let isNormal = function () {
 
 let isHard = function () {
 	difficulty = "hard";
-	arrowStyle.item(0).style.visibility = 'hidden';
-	arrowStyle.item(1).style.visibility = 'hidden';
-	arrowStyle.item(2).style.visibility = 'visible';
+	handStyle.item(0).style.visibility = 'hidden';
+	handStyle.item(1).style.visibility = 'hidden';
+	handStyle.item(2).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
 			"fa-diamond",
@@ -245,10 +248,10 @@ const starCounter = function () {
 	}
 }
 
-const dancingArrow = function() {
-	arrowStyle.item(0).classList.toggle('arrow-dancing');
-	arrowStyle.item(1).classList.toggle('arrow-dancing');
-	arrowStyle.item(2).classList.toggle('arrow-dancing');
+const dancinghand = function() {
+	handStyle.item(0).classList.toggle('hand-dancing');
+	handStyle.item(1).classList.toggle('hand-dancing');
+	handStyle.item(2).classList.toggle('hand-dancing');
 
 }
 
@@ -290,11 +293,13 @@ const victory = function () {
 				if (Math.floor(seconds) === 61) {
 					totalTime = `1 minute and 1 second`;			
 				} else {
-					`${Math.floor(seconds / 60)} minutes and 1 second`;
+					totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
 				}
-			}
+			} else {
+				totalTime = `${Math.floor(seconds / 60)} minutes and ${Math.floor(seconds % 60)} seconds`;
+			}			
 		} else {
-			totalTime = `${seconds} seconds`;
+			totalTime = `${Math.floor(seconds)} seconds`;
 		}
 
 
@@ -335,8 +340,6 @@ const restart = function () {
 
 const game = function() {
 
-	// stores the time the game started
-	gameStart = Date.now();
 
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
@@ -401,13 +404,15 @@ document.getElementById('hard').addEventListener('click', isHard);
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
-setInterval (dancingArrow, 1000);
+setInterval (dancinghand, 1000);
 
 // if 2 or 1 stars, blinks red, if 0, stays red
 setInterval (blinking, 1900);
 
 setInterval (blinking2, 600);
 
+// stores the time the game started
+gameStart = Date.now();
 
 // starts the game's logic
 game();
