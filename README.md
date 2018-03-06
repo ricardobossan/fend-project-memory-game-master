@@ -21,10 +21,9 @@ For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # JS Code
 
-##Global Variables
+## Global Variables
 
-```
-const deck = document.querySelector('.deck'),
+```const deck = document.querySelector('.deck'),
 	everyCard = document.getElementsByClassName('card'),
 	starNum = document.querySelector('.stars'),
 	moveNum = document.querySelector('.moves');
@@ -58,12 +57,10 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-bomb",
 		"fa-bomb"
 	];
-	```
-
-
+```
 ## Functions
 
-Makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
+Makes the violet hand hovering above the easy difficulty option visible by the beggining of the game (which starts set to `easy` - see line 55
 handStyle.item(0).style.visibility = 'visible';
 
 
