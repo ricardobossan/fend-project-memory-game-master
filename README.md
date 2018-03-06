@@ -1,25 +1,14 @@
-# Memory Game Project
+# Matching Game
 
-## Table of Contents
+This is the code for a memory game, with choice of 3 difficulty levels, ranking system, move counter and a timer.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+This project has been made as a requirement for graduation in Udacity's Front-End Web Developer Nanodegree.
 
-## Instructions
+## Credits and Acknowledgement
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+I would like to give my sincere thanks to my Udacity's mentor Jai, for the support and encouragement. 
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
-
-# JS Code
+I Also would like to express my gratitude to the following, for testing my code's usability and bringing me suggestions for improving it: My parents Harley and Deise Bossan, my girlfriend Amanda Schwarz, my friends Sergio Schwarz, Aluisio Maia, Oyama Scharra, Farney Paixao and Rafael Montenegro.
 
 ## Global Variables
 
@@ -217,7 +206,10 @@ const generate = function () {
 
 ### Timer Function
 
-Logic for timer, located on top-right corner of the browser window:
+Got logic for this `timer()` function on https://teamtreehouse.com/community/i-dont-understand-one-piece-of-code
+
+Logic for timer, located on top-right corner of the browser windo:
+
 
 ```
 let timer = function myTimer() {
