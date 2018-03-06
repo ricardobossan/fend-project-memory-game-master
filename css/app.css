@@ -49,7 +49,6 @@ h1 {
 .choose-difficulty {
     width: 500px;
     height: 36px;
-    /* background-color: #3C384D; */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -274,12 +273,10 @@ Animations
 
 @keyframes dance {
     15% {
- /*     color: #FFF; */
+
     }
     100% {
-        /* color: #ff00Bf; */
         line-height: 0.6em;
-        /* transform: rotateY(360deg); */
     }
 
 }

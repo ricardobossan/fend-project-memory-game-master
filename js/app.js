@@ -80,11 +80,17 @@ Functions
 // makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
 handStyle.item(0).style.visibility = 'visible';
 
+/*
+3 Difficulty Setting Functions
+*/
+
+// the following blocks of functions (`isEasy`, `isnormal` and `isHard`) switch between difficulty levels upon click, changing the number of cards, it's symbols and number of moves necessary to lose stars/rank.
+// Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
+// Function restart is called at the end of each of this difficulty blocks
 let isEasy = function () {
 	difficulty = "easy";
 	handStyle.item(1).style.visibility = 'hidden';
 	handStyle.item(2).style.visibility = 'hidden';
-
 	handStyle.item(0).style.visibility = 'visible';
 	arrays = [
 			"fa-diamond",
@@ -188,7 +194,7 @@ function shuffle() {
     return arrays;
 }
 
-// Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function)
+// Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function - line 201)
 function hideCards () {
 	setTimeout(function() {
 	let element = 0;
@@ -196,7 +202,7 @@ function hideCards () {
 	}, 4000);
 }
 
-// Creates a shuffled deck (`.deck`), displays all cards symbols, then hides then with the `hideCards()` callback function
+// Creates a shuffled deck (`.deck`), that displays all cards symbols, then hides them with the `hideCards()` callback function
 const generate = function () {
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
@@ -208,7 +214,6 @@ const generate = function () {
 		fragment.appendChild(li);
 	});
 	deck.appendChild(fragment);
-
 	hideCards();
 }
 
@@ -225,7 +230,8 @@ let timer = function myTimer() {
     }
   
     timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
-// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
+
+	// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
     setTimeout(myTimer, 1000);
 }
 
@@ -235,7 +241,7 @@ const moveCounter = function () {
 	moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
 }
 
-// If move >= 13, removes 1 star; >= 17, removes another; >= 21, another
+// logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
 const starCounter = function () {
 	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
 		starNum.firstElementChild.outerHTML = "";			
@@ -248,19 +254,22 @@ const starCounter = function () {
 	}
 }
 
-const dancinghand = function() {
+// Function for calling animation on the pointing violet hand, at intervals of 1 second, which will be set further down the code bellow
+const movingHand = function() {
 	handStyle.item(0).classList.toggle('hand-dancing');
 	handStyle.item(1).classList.toggle('hand-dancing');
 	handStyle.item(2).classList.toggle('hand-dancing');
 
 }
 
+// function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
 let blinking = function () {
 	if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 19 && move < 25 : move >= 29) {
 		starNum.classList.toggle('blink-1');
 	}	
 }
 
+// Function for faster (`.blink-2`) red blinking star counter field, at given intervals, to be set further down bellow, and removing the `.blink-1` animation. Does the same for the class `.blink-3`
 let blinking2 = function () {
 	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty === "normal" ? move >= 25 && move < 30 : move >= 30){
 		starNum.classList.remove('blink-1');
@@ -272,43 +281,49 @@ let blinking2 = function () {
 	}
 }
 
-// display victory message after the array.length cards are matched, with a wait of 800 milliseconds
+// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
 const victory = function () {
 	if (document.getElementsByClassName('match').length === arrays.length) {
-		let gameEnd = Date.now();
-		//function totalGameTime () {
+		let gameEnd = Date.now();		
 		let gameTime = gameEnd - gameStart;		
-		//totalGameTime();
-		let seconds = gameTime / 1000;
+		let seconds = gameTime / 1000; // from milliseconds to seconds
 		
-		//logic for respecting concordance between singular and plural words and numbers, while displaying the duration of game (avoid errors like `1 seconds`, or `1 minutes`)
+		//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
+
+		// if game took 60 of more seconds
 		if (seconds >= 60) {
+			// if game has round minutes, and no seconds
 			if (Math.floor(seconds % 60) === 0) {
+				//if game has 1 perfect minute, displays it make sure message shown as singular concordance
 				if (Math.floor(seconds) === 60) {
 					totalTime = `1 minute`;
+				// if has 2 or more perfect minutes, message with plural concordance
 				} else {
 					totalTime = `${Math.floor(seconds / 60)} minutes`;
 				}
+			// same logic as the correspondent if statement, but with 1 second after minute, wich makes it a singular concordance second
 			} else if (Math.floor(seconds % 60) === 1) {
 				if (Math.floor(seconds) === 61) {
 					totalTime = `1 minute and 1 second`;			
 				} else {
 					totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
 				}
+			// plural concordance for plural minutes and seconds
 			} else {
 				totalTime = `${Math.floor(seconds / 60)} minutes and ${Math.floor(seconds % 60)} seconds`;
 			}			
+		// less than one minute. No game will last 1 second, so respective statement uncessary, obviously
 		} else {
 			totalTime = `${Math.floor(seconds)} seconds`;
 		}
 
 
-		// displays 
+		// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 		setTimeout(function() {
 			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
 		}, 800);
 
-		// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 2 seconds
+		// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
 		setTimeout(function() {
 			restart();
 		}, 1000);
@@ -318,10 +333,15 @@ const victory = function () {
 //Restart Button's function
 const restart = function () {
 	
-	//erases previouslly generated deck's ul (`.deck`), star counter (`.stars`) and moves counter(`.moves`)
+	//erases previouslly dinamically generated js code, so it can start from 0, upon new round
 	s = 0;
 	m = 0;
 	h = 0;
+	gameStart = "";
+	gameEnd = "";
+	gameTime = 0;
+	seconds = 0;
+	totalTime = 0;
 	move = 0;
 	deck.innerHTML = "";
 	timerCounter = "00 : 00 : 00";
@@ -333,37 +353,42 @@ const restart = function () {
 	match.splice(0, match.length);
 	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
 		
-	//generate new shuffled array and restarts game
+	//generate new shuffled array and begins game's logic again
 	generate();
 	game();
 }
 
+// Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
 const game = function() {
 
+	// stores the time the game started
+	gameStart = Date.now();
 
+	//adds a click event for every card
 	for (let i = 0; i < everyCard.length; i++) {
 		everyCard.item(i).addEventListener('click', function () {
 
-			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches the same symbol.
+			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches or not the same symbol.
 			if (!open.includes(everyCard.item(i))) {
+
+				// when a third card is clicked/iterated, and, therefore, turned open, the first two are turned down and have their symbols hidden; while leaving a third card (from last iteration) turned open, to see if it matches the next card to be turned open upon the subsequent click/iteration, or if it doesn't match, which would have this processes repeated over (in another words, this step removes the `.open` and `show´ classes from the first two iterated cards added to the open array list, and then removes those cards from the list altogheter, leaving the third one with those two classes, remaining in the open array)
 				if (open.length >= 2) {
 					open[0].classList.remove("open", "show");
-					open[1].classList.remove("open", "show");
-					/*open[2].classList.remove("open", "show");*/
-					open.splice(0, 3);
+					open[1].classList.remove("open", "show");		
+					open.splice(0, 2);
 				}
-				// Reveals each card on click, adding them to the `open` array list
+				// Reveals a card on click, adding them to the `open` array list
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
 
+				// checks if 2 cards are  in the open array (one added to this array in the last click/iteration, and the other added on the present click/iteration)
 				if (open.length === 2) {
 					
-					// updates move counters each time a pair of cards is turned
+					// calls the functions that updates the  move and star counters each time a pair of cards is turned
 					moveCounter();
 					starCounter();
-					/*moveCounter();*/
-
-					// checks if pair of cards have the same symbol and, if they do, adds them to the `match` array list
+					
+					// checks if the pair of cards have the same symbol and, if they do, adds them to the `match` array list, removes the `.open` and `.show` classes, and adds them the `.match` class
 					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
 						match = open.slice();
 						match[0].classList.add("match");
@@ -374,16 +399,9 @@ const game = function() {
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
 
-						// if array.length cards are matching its symbols, displays victory alert box
+						// if array.length (each difficulty level has it's own array, with it's own length)number of cards are matching its symbols, displays victory alert box and runs the `restart` function, starting the game all over again, in the same difficulty level
 						victory();
 					}
-
-/*
-				When a pair of cards is turned up, but their symbols are not the same, the cards are held up until the window is clicked again.	
-				Also, if a single card is turned up at this point, it is turned down too, so the `game()` function iterates over and turns another card up, to see if it forms a pair of cards with the same symbol
-*/
-				/*window.addEventListener('click', function () {*/
-					/*});*/
 				}
 			}
 		});
@@ -393,29 +411,26 @@ const game = function() {
 // calls function to create deck of shuffled cards
 generate();
 
-
+// Adds event listeners for each difficulty level selection button
 document.getElementById('easy').addEventListener('click', isEasy);
 document.getElementById('normal').addEventListener('click', isNormal);
 document.getElementById('hard').addEventListener('click', isHard);
 
-
-//chooseDifficulty();
-
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
-setInterval (dancinghand, 1000);
+// runs, every 1 second, the animation for violet pointing hand icon over the difficulty level selection buttons
+setInterval (movingHand, 1000);
 
-// if 2 or 1 stars, blinks red, if 0, stays red
+// if 2 or 1 stars, blinks red, if 0 stars, stays red
 setInterval (blinking, 1900);
 
 setInterval (blinking2, 600);
 
-// stores the time the game started
-gameStart = Date.now();
+
 
 // starts the game's logic
 game();
 
-// makes the restart button work when clicked (`.restart`)
+// adds event listener for the restart button, which makes the game start over when clicked
 document.querySelector('.restart').addEventListener('click', restart);
