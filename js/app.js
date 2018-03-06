@@ -23,6 +23,7 @@ OK * Comments:
 OK ** comment adjustment to Project Specifications
 OK * README:
 OK ** detail the game and all dependencies
+OK	* Javascript Styleguide: Check it all over again
 
 							DONE ABOVE
 ---------------------------------------------------------------------
@@ -30,8 +31,17 @@ OK ** detail the game and all dependencies
 //
 // TODO
 //
-* 
-	Javascript Styleguide: Check it all over again
+ * Switch one of the normal difficulty's symbols for the heart symbol, for color 
+ * Project reviewer: 
+ ** lines 259-263, use loop instead of repeating statements
+ ** save timing logic to new branch and leave it there. Try this `timer.js` 
+ @ https://github.com/husa/timer.js/
+ ** customize modal, with lienear-gradient
+ ** See Arrow functions! 
+ @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+ ** Move global variables into function, for safety
+ ** Remake README properly, keeping the `Credits and Acknowledgement` section
+
 */
 
 
@@ -132,8 +142,8 @@ let isNormal = function () {
 			"fa-cube",
 			"fa-leaf",
 			"fa-leaf",
-			"fa-bicycle",
-			"fa-bicycle",
+			"fa-heart",
+			"fa-heart",
 			"fa-bomb",
 			"fa-bomb",
 			"fa-globe",
