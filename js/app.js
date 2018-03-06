@@ -276,9 +276,29 @@ const victory = function () {
 		//function totalGameTime () {
 		let gameTime = gameEnd - gameStart;		
 		//totalGameTime();
-		let gameTimeTemp = gameTime /1000;
-		gameTimeTemp >= 60 ? totalTime = (gameTimeTemp / 60).toFixed(2) + " minutes" : totalTime = gameTimeTemp.toFixed(0) + " seconds"; 
-	
+		let seconds = gameTime / 1000;
+		
+		//logic for respecting concordance between singular and plural words and numbers, while displaying the duration of game (avoid errors like `1 seconds`, or `1 minutes`)
+		if (seconds >= 60) {
+			if (Math.floor(seconds % 60) === 0) {
+				if (Math.floor(seconds) === 60) {
+					totalTime = `1 minute`;
+				} else {
+					totalTime = `${Math.floor(seconds / 60)} minutes`;
+				}
+			} else if (Math.floor(seconds % 60) === 1) {
+				if (Math.floor(seconds) === 61) {
+					totalTime = `1 minute and 1 second`;			
+				} else {
+					`${Math.floor(seconds / 60)} minutes and 1 second`;
+				}
+			}
+		} else {
+			totalTime = `${seconds} seconds`;
+		}
+
+
+		// displays 
 		setTimeout(function() {
 			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
 		}, 800);
