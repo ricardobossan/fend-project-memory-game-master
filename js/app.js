@@ -31,7 +31,7 @@ OK ** detail the game and all dependencies
 // TODO
 //
 * 
-Javascript Styleguide: Check it all over again
+	Javascript Styleguide: Check it all over again
 */
 
 
@@ -69,7 +69,7 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-leaf",
 		"fa-leaf",
 		"fa-heart",
-		"fa-heart",		
+		"fa-heart",
 		"fa-bomb",
 		"fa-bomb"
 	];
@@ -245,10 +245,10 @@ const moveCounter = function () {
 // logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
 const starCounter = function () {
 	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
-		starNum.firstElementChild.outerHTML = "";			
+		starNum.firstElementChild.outerHTML = "";
 	}
 	if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 25 : move === 30) {
-		starNum.firstElementChild.outerHTML = "";		
+		starNum.firstElementChild.outerHTML = "";
 	}
 	if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35) {
 		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
@@ -260,7 +260,6 @@ const movingHand = function() {
 	handStyle.item(0).classList.toggle('hand-dancing');
 	handStyle.item(1).classList.toggle('hand-dancing');
 	handStyle.item(2).classList.toggle('hand-dancing');
-
 }
 
 // function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
@@ -272,7 +271,7 @@ let blinking = function () {
 
 // Function for faster (`.blink-2`) red blinking star counter field, at given intervals, to be set further down bellow, and removing the `.blink-1` animation. Does the same for the class `.blink-3`
 let blinking2 = function () {
-	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty === "normal" ? move >= 25 && move < 30 : move >= 30){
+	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty=== "normal" ? move >= 25 && move < 30 : move >= 30){
 		starNum.classList.remove('blink-1');
 		starNum.classList.toggle('blink-2');
 	}
@@ -285,8 +284,8 @@ let blinking2 = function () {
 // display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
 const victory = function () {
 	if (document.getElementsByClassName('match').length === arrays.length) {
-		let gameEnd = Date.now();		
-		let gameTime = gameEnd - gameStart;		
+		let gameEnd = Date.now();
+		let gameTime = gameEnd - gameStart;
 		let seconds = gameTime / 1000; // from milliseconds to seconds
 		
 		//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
@@ -305,19 +304,18 @@ const victory = function () {
 			// same logic as the correspondent if statement, but with 1 second after minute, wich makes it a singular concordance second
 			} else if (Math.floor(seconds % 60) === 1) {
 				if (Math.floor(seconds) === 61) {
-					totalTime = `1 minute and 1 second`;			
+					totalTime = `1 minute and 1 second`;
 				} else {
 					totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
 				}
 			// plural concordance for plural minutes and seconds
 			} else {
 				totalTime = `${Math.floor(seconds / 60)} minutes and ${Math.floor(seconds % 60)} seconds`;
-			}			
+			}
 		// less than one minute. No game will last 1 second, so respective statement uncessary, obviously
 		} else {
 			totalTime = `${Math.floor(seconds)} seconds`;
 		}
-
 
 		// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 		setTimeout(function() {
@@ -331,10 +329,8 @@ const victory = function () {
 	};
 }
 
-//Restart Button's function
+//Restart Button's function: erases previouslly dinamically generated js code, so it can start from 0, upon new round
 const restart = function () {
-	
-	//erases previouslly dinamically generated js code, so it can start from 0, upon new round
 	s = 0;
 	m = 0;
 	h = 0;
@@ -348,12 +344,12 @@ const restart = function () {
 	timerCounter = "00 : 00 : 00";
 	starNum.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
 	moveNum.innerHTML = "0 Moves";
+	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
 
 	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
 	open.splice(0, open.length);
 	match.splice(0, match.length);
-	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
-		
+	
 	//generate new shuffled array and begins game's logic again
 	generate();
 	game();
@@ -375,7 +371,7 @@ const game = function() {
 				// when a third card is clicked/iterated, and, therefore, turned open, the first two are turned down and have their symbols hidden; while leaving a third card (from last iteration) turned open, to see if it matches the next card to be turned open upon the subsequent click/iteration, or if it doesn't match, which would have this processes repeated over (in another words, this step removes the `.open` and `show´ classes from the first two iterated cards added to the open array list, and then removes those cards from the list altogheter, leaving the third one with those two classes, remaining in the open array)
 				if (open.length >= 2) {
 					open[0].classList.remove("open", "show");
-					open[1].classList.remove("open", "show");		
+					open[1].classList.remove("open", "show");
 					open.splice(0, 2);
 				}
 				// Reveals a card on click, adding them to the `open` array list
@@ -427,8 +423,6 @@ setInterval (movingHand, 1000);
 setInterval (blinking, 1900);
 
 setInterval (blinking2, 600);
-
-
 
 // starts the game's logic
 game();
