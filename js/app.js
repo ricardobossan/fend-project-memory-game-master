@@ -24,6 +24,7 @@ OK ** comment adjustment to Project Specifications
 OK * README:
 OK ** detail the game and all dependencies
 OK	* Javascript Styleguide: Check it all over again
+OK * Switch one of the normal difficulty's symbols for the heart symbol, for color 
 
 							DONE ABOVE
 ---------------------------------------------------------------------
@@ -31,10 +32,9 @@ OK	* Javascript Styleguide: Check it all over again
 //
 // TODO
 //
- * Switch one of the normal difficulty's symbols for the heart symbol, for color 
  * Project reviewer: 
- ** lines 259-263, use loop instead of repeating statements
- ** save timing logic to new branch and leave it there. Try this `timer.js` 
+ OK ** lines 259-263, use loop instead of repeating statements
+ ** save timing logic to new branch and leave it there. merge this branch into `follow-udacity-review` Try this `timer.js` 
  @ https://github.com/husa/timer.js/
  ** customize modal, with lienear-gradient
  ** See Arrow functions! 
@@ -267,9 +267,9 @@ const starCounter = function () {
 
 // Function for calling animation on the pointing violet hand, at intervals of 1 second, which will be set further down the code bellow
 const movingHand = function() {
-	handStyle.item(0).classList.toggle('hand-dancing');
-	handStyle.item(1).classList.toggle('hand-dancing');
-	handStyle.item(2).classList.toggle('hand-dancing');
+	for (let f = 0; f <= 3; f++) {
+		handStyle.item(f).classList.toggle('hand-dancing');
+	}
 }
 
 // function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
