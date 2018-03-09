@@ -49,21 +49,12 @@ OK * Switch one of the normal difficulty's symbols for the heart symbol, for col
 Global Variables
 */
 
-const deck = document.querySelector('.deck'),
-	everyCard = document.getElementsByClassName('card'),
-	starNum = document.querySelector('.stars'),
-	moveNum = document.querySelector('.moves');
-
-let timeCounter = document.getElementById('time-counter'),
+let timeCounter = document.getElementById('time-counter');
     s = 0, m = 0, h = 0;
-    gameStart = "",
-	move = 0,
-	open = [], // array list for the cards that are turned (`.open`)
-	match = [], // array list for the pairs of cards that have the same symbol (`.match`)
-	everyStar = document.getElementsByClassName('fa-star'),
-	b = "",
+/*   	move = 0,*/
+	
 	difficulty = "easy",
-	handStyle = document.getElementsByClassName('hands'),
+/*	handStyle = document.getElementsByClassName('hands'),*/
 	// game starts at easy difficulty
 	arrays = [
 		"fa-diamond",
@@ -84,12 +75,13 @@ let timeCounter = document.getElementById('time-counter'),
 		"fa-bomb"
 	];
 
+// makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
+let handStyle = document.getElementsByClassName('hands');
+handStyle.item(0).style.visibility = 'visible';
+
 /*
 Functions
 */
-
-// makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
-handStyle.item(0).style.visibility = 'visible';
 
 /*
 3 Difficulty Setting Functions
@@ -100,6 +92,7 @@ handStyle.item(0).style.visibility = 'visible';
 // Function restart is called at the end of each of this difficulty blocks
 let isEasy = function () {
 	difficulty = "easy";
+	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(1).style.visibility = 'hidden';
 	handStyle.item(2).style.visibility = 'hidden';
 	handStyle.item(0).style.visibility = 'visible';
@@ -126,6 +119,7 @@ let isEasy = function () {
 
 let isNormal = function () {
 	difficulty = "normal";
+	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(0).style.visibility = 'hidden';
 	handStyle.item(2).style.visibility = 'hidden';
 	handStyle.item(1).style.visibility = 'visible';
@@ -156,6 +150,7 @@ let isNormal = function () {
 
 let isHard = function () {
 	difficulty = "hard";
+	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(0).style.visibility = 'hidden';
 	handStyle.item(1).style.visibility = 'hidden';
 	handStyle.item(2).style.visibility = 'visible';
@@ -215,6 +210,7 @@ function hideCards () {
 
 // Creates a shuffled deck (`.deck`), that displays all cards symbols, then hides them with the `hideCards()` callback function
 const generate = function () {
+	const deck = document.querySelector('.deck');
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
 	arrays.forEach(function createCard(array) {
@@ -239,112 +235,34 @@ let timer = function myTimer() {
             h++;
         }
     }
-  
+    let timeCounter = document.getElementById('time-counter');
     timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
 
 	// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
     setTimeout(myTimer, 1000);
 }
 
-// display the number of moves on the move counter (.moves)
-const moveCounter = function () {
-	move++;
-	moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
-}
-
-// logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
-const starCounter = function () {
-	if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
-		starNum.firstElementChild.outerHTML = "";
-	}
-	if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 25 : move === 30) {
-		starNum.firstElementChild.outerHTML = "";
-	}
-	if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35) {
-		starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
-	}
-}
-
 // Function for calling animation on the pointing violet hand, at intervals of 1 second, which will be set further down the code bellow
 const movingHand = function() {
-	for (let f = 0; f <= 3; f++) {
-		handStyle.item(f).classList.toggle('hand-dancing');
+	let handStyle = document.getElementsByClassName('hands');
+	for (let f = 0; f <= 2; f++) {
+		document.getElementsByClassName('hands').item(f).classList.toggle('hand-dancing');
 	}
-}
-
-// function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
-let blinking = function () {
-	if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 19 && move < 25 : move >= 29) {
-		starNum.classList.toggle('blink-1');
-	}	
-}
-
-// Function for faster (`.blink-2`) red blinking star counter field, at given intervals, to be set further down bellow, and removing the `.blink-1` animation. Does the same for the class `.blink-3`
-let blinking2 = function () {
-	if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty=== "normal" ? move >= 25 && move < 30 : move >= 30){
-		starNum.classList.remove('blink-1');
-		starNum.classList.toggle('blink-2');
-	}
-	if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 30 : move >= 35){
-		starNum.classList.remove('blink-3');
-		starNum.classList.toggle('blink-3');
-	}
-}
-
-// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
-const victory = function () {
-	if (document.getElementsByClassName('match').length === arrays.length) {
-		let gameEnd = Date.now();
-		let gameTime = gameEnd - gameStart;
-		let seconds = gameTime / 1000; // from milliseconds to seconds
-		
-		//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
-
-		// if game took 60 of more seconds
-		if (seconds >= 60) {
-			// if game has round minutes, and no seconds
-			if (Math.floor(seconds % 60) === 0) {
-				//if game has 1 perfect minute, displays it make sure message shown as singular concordance
-				if (Math.floor(seconds) === 60) {
-					totalTime = `1 minute`;
-				// if has 2 or more perfect minutes, message with plural concordance
-				} else {
-					totalTime = `${Math.floor(seconds / 60)} minutes`;
-				}
-			// same logic as the correspondent if statement, but with 1 second after minute, wich makes it a singular concordance second
-			} else if (Math.floor(seconds % 60) === 1) {
-				if (Math.floor(seconds) === 61) {
-					totalTime = `1 minute and 1 second`;
-				} else {
-					totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
-				}
-			// plural concordance for plural minutes and seconds
-			} else {
-				totalTime = `${Math.floor(seconds / 60)} minutes and ${Math.floor(seconds % 60)} seconds`;
-			}
-		// less than one minute. No game will last 1 second, so respective statement uncessary, obviously
-		} else {
-			totalTime = `${Math.floor(seconds)} seconds`;
-		}
-
-		// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
-		setTimeout(function() {
-			window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
-		}, 800);
-
-		// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
-		setTimeout(function() {
-			restart();
-		}, 1000);
-	};
 }
 
 //Restart Button's function: erases previouslly dinamically generated js code, so it can start from 0, upon new round
 const restart = function () {
+	const deck = document.querySelector('.deck');
+	const starNum = document.querySelector('.stars');
+	const moveNum = document.querySelector('.moves');
+
+	let open = [];
+	let show = [];
+	let match = [];
 	s = 0;
 	m = 0;
 	h = 0;
-	gameStart = "";
+	let gameStart = "";
 	gameEnd = "";
 	gameTime = 0;
 	seconds = 0;
@@ -367,6 +285,57 @@ const restart = function () {
 
 // Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
 const game = function() {
+	let move = 0;
+	const everyCard = document.getElementsByClassName('card');
+	let open = [], // array list for the cards that are turned (`.open`)
+	match = [];	 // array list for the pairs of cards that have the same symbol (`.match`)
+	
+	// display the number of moves on the move counter (.moves)
+	const moveCounter = function () {
+		const moveNum = document.querySelector('.moves');
+		move++;
+		moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
+	}
+	
+	// logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
+	const starCounter = function () {
+		const starNum = document.querySelector('.stars');
+		if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
+			starNum.firstElementChild.outerHTML = "";
+		}
+		if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 25 : move === 30) {
+			starNum.firstElementChild.outerHTML = "";
+		}
+		if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35) {
+			starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
+		}
+	}
+
+
+	// function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
+	const blinking = function () {
+		const starNum = document.querySelector('.stars');
+
+		if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 19 && move < 25 : move >= 29) {
+			
+			starNum.classList.toggle('blink-1');
+		}	
+	}
+
+	// Function for faster (`.blink-2`) red blinking star counter field, at given intervals, to be set further down bellow, and removing the `.blink-1` animation. Does the same for the class `.blink-3`
+	const blinking2 = function () {
+		const starNum = document.querySelector('.stars');
+
+		if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty=== "normal" ? move >= 25 && move < 30 : move >= 30){
+			starNum.classList.remove('blink-1');
+			starNum.classList.toggle('blink-2');
+		}
+		if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 30 : move >= 35){
+			starNum.classList.remove('blink-3');
+			starNum.classList.toggle('blink-3');
+		}
+	}
+
 
 	// stores the time the game started
 	gameStart = Date.now();
@@ -390,7 +359,6 @@ const game = function() {
 
 				// checks if 2 cards are  in the open array (one added to this array in the last click/iteration, and the other added on the present click/iteration)
 				if (open.length === 2) {
-					
 					// calls the functions that updates the  move and star counters each time a pair of cards is turned
 					moveCounter();
 					starCounter();
@@ -406,6 +374,55 @@ const game = function() {
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
 
+					// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
+					const victory = function () {
+						let everyStar = document.getElementsByClassName('fa-star');
+						if (document.getElementsByClassName('match').length === arrays.length) {
+							let gameEnd = Date.now();
+							let gameTime = gameEnd - gameStart;
+							let seconds = gameTime / 1000; // from milliseconds to seconds
+							
+							//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
+
+							// if game took 60 of more seconds
+							if (seconds >= 60) {
+								// if game has round minutes, and no seconds
+								if (Math.floor(seconds % 60) === 0) {
+									//if game has 1 perfect minute, displays it make sure message shown as singular concordance
+									if (Math.floor(seconds) === 60) {
+										totalTime = `1 minute`;
+									// if has 2 or more perfect minutes, message with plural concordance
+									} else {
+										totalTime = `${Math.floor(seconds / 60)} minutes`;
+									}
+								// same logic as the correspondent if statement, but with 1 second after minute, wich makes it a singular concordance second
+								} else if (Math.floor(seconds % 60) === 1) {
+									if (Math.floor(seconds) === 61) {
+										totalTime = `1 minute and 1 second`;
+									} else {
+										totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
+									}
+								// plural concordance for plural minutes and seconds
+								} else {
+									totalTime = `${Math.floor(seconds / 60)} minutes and ${Math.floor(seconds % 60)} seconds`;
+								}
+							// less than one minute. No game will last 1 second, so respective statement uncessary, obviously
+							} else {
+								totalTime = `${Math.floor(seconds)} seconds`;
+							}
+
+							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
+							setTimeout(function() {
+								window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
+							}, 800);
+
+							// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
+							setTimeout(function() {
+								restart();
+							}, 1000);
+						};
+					}
+
 						// if array.length (each difficulty level has it's own array, with it's own length)number of cards are matching its symbols, displays victory alert box and runs the `restart` function, starting the game all over again, in the same difficulty level
 						victory();
 					}
@@ -413,6 +430,12 @@ const game = function() {
 			}
 		});
 	}
+
+// if 2 or 1 stars, blinks red, if 0 stars, stays red
+setInterval (blinking, 1900);
+
+setInterval (blinking2, 600);
+
 }
 
 // calls function to create deck of shuffled cards
@@ -428,11 +451,6 @@ setTimeout(timer, 1000);
 
 // runs, every 1 second, the animation for violet pointing hand icon over the difficulty level selection buttons
 setInterval (movingHand, 1000);
-
-// if 2 or 1 stars, blinks red, if 0 stars, stays red
-setInterval (blinking, 1900);
-
-setInterval (blinking2, 600);
 
 // starts the game's logic
 game();
