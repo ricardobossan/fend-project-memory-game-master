@@ -1,4 +1,27 @@
 /*
+//
+// TODO
+//
+
+
+ * Project reviewer: 
+
+ CURRENT --> ** customize modal, with lienear-gradient <--
+
+ OK ** lines 259-263, use loop instead of repeating statements
+ ** save timing logic to new branch and leave it there. merge this branch into `follow-udacity-review` Try this `timer.js` 
+ @ https://github.com/husa/timer.js/
+ ** See Arrow functions! 
+ @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+ ** Move global variables into function, for safety
+ ** Remake README properly, keeping the `Credits and Acknowledgement` section
+--------------------------------------------------------------------
+
+/*							
+//
+// DONE ALREADY
+//
+
 * TODO: Adjust code to meet the project rubric (Project Specification):
 OK * Congratulations Pop Up: 
 OK ** Ask if the player wants to play again OK
@@ -25,25 +48,9 @@ OK * README:
 OK ** detail the game and all dependencies
 OK	* Javascript Styleguide: Check it all over again
 OK * Switch one of the normal difficulty's symbols for the heart symbol, for color 
-
-							DONE ABOVE
 ---------------------------------------------------------------------
 
-//
-// TODO
-//
- * Project reviewer: 
- OK ** lines 259-263, use loop instead of repeating statements
- ** save timing logic to new branch and leave it there. merge this branch into `follow-udacity-review` Try this `timer.js` 
- @ https://github.com/husa/timer.js/
- ** customize modal, with lienear-gradient
- ** See Arrow functions! 
- @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
- ** Move global variables into function, for safety
- ** Remake README properly, keeping the `Credits and Acknowledgement` section
-
 */
-
 
 /*
 Global Variables
@@ -285,6 +292,7 @@ const restart = function () {
 
 // Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
 const game = function() {
+	const starNum = document.querySelector('.stars');
 	let move = 0;
 	const everyCard = document.getElementsByClassName('card');
 	let open = [], // array list for the cards that are turned (`.open`)
@@ -307,10 +315,9 @@ const game = function() {
 			starNum.firstElementChild.outerHTML = "";
 		}
 		if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35) {
-			starNum.innerHTML = "<li><i><small>No star for you...</small></i></li>";
+			starNum.innerHTML = `<li><i><small><b>No star for you... </b><span class ="icon-emo-displeased"></span></small></i></li>`;
 		}
 	}
-
 
 	// function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
 	const blinking = function () {
@@ -330,12 +337,7 @@ const game = function() {
 			starNum.classList.remove('blink-1');
 			starNum.classList.toggle('blink-2');
 		}
-		if (difficulty === "easy" ? move >= 24 : difficulty === "normal" ? move >= 30 : move >= 35){
-			starNum.classList.remove('blink-3');
-			starNum.classList.toggle('blink-3');
-		}
 	}
-
 
 	// stores the time the game started
 	gameStart = Date.now();
@@ -362,7 +364,11 @@ const game = function() {
 					// calls the functions that updates the  move and star counters each time a pair of cards is turned
 					moveCounter();
 					starCounter();
-					
+					if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35){
+						starNum.classList.remove('blink-2');
+						starNum.classList.add('blink-3');
+		}
+
 					// checks if the pair of cards have the same symbol and, if they do, adds them to the `match` array list, removes the `.open` and `.show` classes, and adds them the `.match` class
 					if ((open[0].firstChild.outerHTML === open[1].firstChild.outerHTML)) {
 						match = open.slice();
@@ -383,7 +389,6 @@ const game = function() {
 							let seconds = gameTime / 1000; // from milliseconds to seconds
 							
 							//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
-
 							// if game took 60 of more seconds
 							if (seconds >= 60) {
 								// if game has round minutes, and no seconds
@@ -395,7 +400,7 @@ const game = function() {
 									} else {
 										totalTime = `${Math.floor(seconds / 60)} minutes`;
 									}
-								// same logic as the correspondent if statement, but with 1 second after minute, wich makes it a singular concordance second
+								// same logic as the correspondent if statement, but with the expression ``1 second`` after the first minute
 								} else if (Math.floor(seconds % 60) === 1) {
 									if (Math.floor(seconds) === 61) {
 										totalTime = `1 minute and 1 second`;
@@ -450,6 +455,7 @@ document.getElementById('hard').addEventListener('click', isHard);
 setTimeout(timer, 1000);
 
 // runs, every 1 second, the animation for violet pointing hand icon over the difficulty level selection buttons
+
 setInterval (movingHand, 1000);
 
 // starts the game's logic

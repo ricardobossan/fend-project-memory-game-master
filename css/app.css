@@ -238,7 +238,7 @@ Modify colors for the symbols displayed in the cards
 }
 
 .fa-heart {
-    color: red;
+    color: rgba(255,0,0,1);
 }
 
 .fa-gift {
@@ -265,10 +265,12 @@ Animations
 }
 
 .blink-3 {
-    background: red;
-    box-shadow: red 1px 1px 13px 3px;
+    background-color: rgba(255,0,0,0.8);
+    opacity: 0.9;
+    box-shadow: rgba(255,0,0,1) 1px 1px 13px 3px;
     border-radius: 4px;
     padding: 3px;
+    animation: blink-end 2s;
 }
 
 @keyframes dance {
@@ -314,10 +316,23 @@ Animations
 
 @keyframes blink {
     0% {
-        background-color: red;
-        box-shadow: 0 0 10px 3px red;
+        background-color: rgba(255,0,0,1);
+        box-shadow: 0 0 10px 3px rgba(255,0,0,1);
+        opacity: 1;
     }
     100% {
         background-color: #FFF;
+        opacity: 1;
+    }
+}
+
+@keyframes blink-end {
+    0% {
+        background-color: #FFF;
+        box-shadow: #FFF 1px 1px 13px 3px;
+    }
+    100% {
+        box-shadow: rgba(255,0,0,1) 1px 1px 13px 3px;
+
     }
 }
