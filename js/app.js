@@ -440,6 +440,8 @@ const game = function() {
 								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?";
 								modalVar.style.display = "flex";
 								window.addEventListener('click', hideRestart);
+								/*modalVar.setAttribute("style", "display: flex; align-content: space-between;");*/
+/*								document.querySelector('body').setAttribute("style", "background-color: hsl(120, 100%, 0%);");*/
 							}, 800);
 /*
 							// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
