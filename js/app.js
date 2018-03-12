@@ -6,15 +6,16 @@
 
  * Project reviewer: 
 
- CURRENT --> ** customize modal, with lienear-gradient <--
+ CURRENT --> ** customize modal, with lienear-gradient. Credit modal code w3sschool, on README<--
 
  OK ** lines 259-263, use loop instead of repeating statements
- ** save timing logic to new branch and leave it there. merge this branch into `follow-udacity-review` Try this `timer.js` 
- @ https://github.com/husa/timer.js/
  ** See Arrow functions! 
  @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
  ** Move global variables into function, for safety
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
+
+ * Usability:
+ ** text in difficulty selection buttons too small to see on width smaller than 640px
 --------------------------------------------------------------------
 
 /*							
@@ -93,6 +94,11 @@ Functions
 /*
 3 Difficulty Setting Functions
 */
+
+const hideRestart = function() {
+	document.getElementById('modal').style.display = "none";
+	restart();									
+}
 
 // the following blocks of functions (`isEasy`, `isnormal` and `isHard`) switch between difficulty levels upon click, changing the number of cards, it's symbols and number of moves necessary to lose stars/rank.
 // Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
@@ -287,11 +293,14 @@ const restart = function () {
 	
 	//generate new shuffled array and begins game's logic again
 	generate();
-	game();
+	game();	
 }
 
 // Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
 const game = function() {
+		window.removeEventListener('click', hideRestart);
+					let modalVar = document.getElementById('modal');
+						let everyStar = document.getElementsByClassName('fa-star');
 	const starNum = document.querySelector('.stars');
 	let move = 0;
 	const everyCard = document.getElementsByClassName('card');
@@ -339,6 +348,11 @@ const game = function() {
 		}
 	}
 
+	// if 2 or 1 stars, blinks red, if 0 stars, stays red
+	const blinkingIntervalID = setInterval (blinking, 1900);
+
+	const blinking2IntervalID = setInterval (blinking2, 600);
+
 	// stores the time the game started
 	gameStart = Date.now();
 
@@ -382,7 +396,8 @@ const game = function() {
 
 					// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
 					const victory = function () {
-						let everyStar = document.getElementsByClassName('fa-star');
+
+						
 						if (document.getElementsByClassName('match').length === arrays.length) {
 							let gameEnd = Date.now();
 							let gameTime = gameEnd - gameStart;
@@ -416,16 +431,22 @@ const game = function() {
 								totalTime = `${Math.floor(seconds)} seconds`;
 							}
 
+							clearInterval(blinkingIntervalID);
+
+							clearInterval(blinking2IntervalID);
+
 							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 							setTimeout(function() {
-								window.alert("Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?");
+								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?";
+								modalVar.style.display = "flex";
+								window.addEventListener('click', hideRestart);
 							}, 800);
-
+/*
 							// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
 							setTimeout(function() {
 								restart();
 							}, 1000);
-						};
+*/						};
 					}
 
 						// if array.length (each difficulty level has it's own array, with it's own length)number of cards are matching its symbols, displays victory alert box and runs the `restart` function, starting the game all over again, in the same difficulty level
@@ -435,12 +456,6 @@ const game = function() {
 			}
 		});
 	}
-
-// if 2 or 1 stars, blinks red, if 0 stars, stays red
-setInterval (blinking, 1900);
-
-setInterval (blinking2, 600);
-
 }
 
 // calls function to create deck of shuffled cards

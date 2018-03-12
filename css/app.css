@@ -24,18 +24,63 @@ table {
     width: 370px;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     margin-bottom: 10px;
 
+}
+
+#modal {
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: space-between;
+    flex-wrap: wrap;
+    color: #FFF;
+    width: 80%;
+    height: 16%;
+    z-index: 1;
+    background-color: #FFF;
+    /* border: 2px solid #FFF; */
+    border-radius: 8px;
+    margin: auto auto;
+    position: fixed;    
+}
+
+#modal h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 20px 0;    
+    background: linear-gradient(90deg, #02ccba 0%, #aa7ecd 100%);
+}
+/* 
+#modal p {
+    background: linear-gradient(90deg, #02ccba 0%, #aa7ecd 100%);
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+ */
+#msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;    
+    font-size: 1.5em;
+
+    background: linear-gradient(90deg, #02ccba 0%, #aa7ecd 100%);
+
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .difficulty-title {
