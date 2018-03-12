@@ -437,9 +437,12 @@ const game = function() {
 
 							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 							setTimeout(function() {
-								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!\n\nPlay again?";
+								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
 								modalVar.style.display = "flex";
-								window.addEventListener('click', hideRestart);
+								document.querySelector('body').style.background = "rgba(0,0,0,0.7)";
+/*								document.querySelector('.deck').style.background = "rgba(0,0,0,0.7)";
+								document.querySelectorAll('.cards').style.backgroundColor = "rgba(0,0,0,0.7)";
+*/								window.addEventListener('click', hideRestart);
 								/*modalVar.setAttribute("style", "display: flex; align-content: space-between;");*/
 /*								document.querySelector('body').setAttribute("style", "background-color: hsl(120, 100%, 0%);");*/
 							}, 800);
