@@ -96,6 +96,7 @@ Functions
 */
 
 const hideRestart = function() {
+	document.getElementById('peel').outerHTML = "";
 	document.getElementById('modal').style.display = "none";
 	restart();									
 }
@@ -437,14 +438,10 @@ const game = function() {
 
 							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 							setTimeout(function() {
+								document.querySelector('body').insertAdjacentHTML('afterbegin', '<div id="peel"></div>');
 								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
 								modalVar.style.display = "flex";
-								document.querySelector('body').style.background = "rgba(0,0,0,0.7)";
-/*								document.querySelector('.deck').style.background = "rgba(0,0,0,0.7)";
-								document.querySelectorAll('.cards').style.backgroundColor = "rgba(0,0,0,0.7)";
-*/								window.addEventListener('click', hideRestart);
-								/*modalVar.setAttribute("style", "display: flex; align-content: space-between;");*/
-/*								document.querySelector('body').setAttribute("style", "background-color: hsl(120, 100%, 0%);");*/
+								window.addEventListener('click', hideRestart);
 							}, 800);
 /*
 							// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
