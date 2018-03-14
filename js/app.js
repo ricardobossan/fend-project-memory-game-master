@@ -5,13 +5,15 @@
 
  * Project reviewer: 
 
- CURRENT -->** text in difficulty selection buttons too small to see on width smaller than 640px<--
+ CURRENT -->review JS comments<--
  OK ** Move global variables into function, for safety
  OK ** customize modal, with lienear-gradient.And all other elements on a darker background
  OK ** lines 259-263, use loop instead of repeating statements
  OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+ 
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
-  
+ ** test styleguide
+ ** test review again
 --------------------------------------------------------------------
 
 /*							
@@ -53,10 +55,11 @@ OK * Switch one of the normal difficulty's symbols for the heart symbol, for col
 Functions
 */
 
+// Function for hiding both victory's modal and dark background
 const hideRestart =  () => {
 	document.getElementById('peel').outerHTML = "";
 	document.getElementById('modal').style.display = "none";
-	restart();									
+	restart();
 }
 
 /*
@@ -64,8 +67,8 @@ const hideRestart =  () => {
 */
 
 // the following blocks of functions (`isEasy`, `isnormal` and `isHard`) switch between difficulty levels upon click, changing the number of cards, it's symbols and number of moves necessary to lose stars/rank.
-// Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
-// Function restart is called at the end of each of this difficulty blocks
+// Each of these difficulty setting functions hides the two other hovering violet hand pointers at the top of each displayed difficulty option. Displays the one above the chosen difficulty level
+// Function restart is called at the end of each of this difficulty blocks, to make all game variables start from zero
 let isEasy =  () => {
 	let s, m, h;
 	s = 0, m = 0, h = 0;
@@ -182,7 +185,7 @@ const shuffle = () => {
     return arrays;
 }
 
-// Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function - line 201)
+// Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function)
 const hideCards = () => {
 	setTimeout( () => {
 	let element = 0;
@@ -193,7 +196,7 @@ const hideCards = () => {
 // Creates a shuffled deck (`.deck`), that displays all cards symbols, then hides them with the `hideCards()` callback function
 const generate =  () => {
 	const deck = document.querySelector('.deck');
-	let shuffledArrays = shuffle(arrays);
+	shuffle(arrays);
 	let fragment = document.createDocumentFragment();
 	arrays.forEach( (array) => {
 		let li = document.createElement('li');
@@ -224,7 +227,7 @@ let timer = function myTimer() {
     setTimeout(myTimer, 1000);
 }
 
-// Function for calling animation on the pointing violet hand, at intervals of 1 second, which will be set further down the code bellow
+// Function for calling animation on the pointing violet hovering hand, at intervals of 1 second, which will be set further down the code bellow
 const movingHand =  () => {
 	let handStyle = document.getElementsByClassName('hands');
 	for (let f = 0; f <= 2; f++) {
@@ -256,7 +259,7 @@ const restart =  () => {
 	moveNum.innerHTML = "0 Moves";
 	starNum.classList.remove('blink-1', 'blink-2', 'blink-3');
 
-	//erases previouslly generated array list for open cards (`.open`) and for matching card pairs (`.match`)
+	//erases previouslly generated array lists, both for open (`.open`) and matching (`.match`) card pairs 
 	open.splice(0, open.length);
 	match.splice(0, match.length);
 	
@@ -269,13 +272,14 @@ const restart =  () => {
 
 // Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
 const game = () =>{
-		window.removeEventListener('click', hideRestart);
-					let modalVar = document.getElementById('modal');
-						let everyStar = document.getElementsByClassName('fa-star');
+	// Event for turning of victory modal, from a previous game, and restarting i's variables
+	window.removeEventListener('click', hideRestart);
+	let modalVar = document.getElementById('modal');
+	let everyStar = document.getElementsByClassName('fa-star');
 	const starNum = document.querySelector('.stars');
-	let move = 0;
 	const everyCard = document.getElementsByClassName('card');
-	let open = [], // array list for the cards that are turned (`.open`)
+	let move = 0,
+	open = [], // array list for the cards that are turned (`.open`)
 	match = [];	 // array list for the pairs of cards that have the same symbol (`.match`)
 	
 	// display the number of moves on the move counter (.moves)
@@ -285,7 +289,7 @@ const game = () =>{
 		moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
 	}
 	
-	// logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
+	// logic for removing each star/rank at a certain sucessive number of moves (different number of moves required for each difficulty setting)
 	const starCounter =  () => {
 		const starNum = document.querySelector('.stars');
 		if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
@@ -334,7 +338,10 @@ const game = () =>{
 			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches or not the same symbol.
 			if (!open.includes(everyCard.item(i))) {
 
-				// when a third card is clicked/iterated, and, therefore, turned open, the first two are turned down and have their symbols hidden; while leaving a third card (from last iteration) turned open, to see if it matches the next card to be turned open upon the subsequent click/iteration, or if it doesn't match, which would have this processes repeated over (in another words, this step removes the `.open` and `show´ classes from the first two iterated cards added to the open array list, and then removes those cards from the list altogheter, leaving the third one with those two classes, remaining in the open array)
+				// when a third card is clicked/iterated, and, therefore, turned open, the first two are turned down and have their symbols hidden; while leaving a third card (from last iteration) turned open, 
+				// to see if it matches the next card to be turned open upon the subsequent click/iteration, or if it doesn't match, which would have this processes repeated over (in another words, 
+				// this step removes the `.open` and `.show´ classes from the first two iterated cards added to the open array list, and then removes those cards from the list altogheter,
+				// leaving the third one with those two classes, remaining in the open array)
 				if (open.length >= 2) {
 					open[0].classList.remove("open", "show");
 					open[1].classList.remove("open", "show");
@@ -344,9 +351,9 @@ const game = () =>{
 				open.splice(0, 0, everyCard.item(i));
 				open[0].classList.add("open", "show");
 
-				// checks if 2 cards are  in the open array (one added to this array in the last click/iteration, and the other added on the present click/iteration)
+				// checks if 2 cards are in the open array (one added to this array in the last click/iteration, and the other added on the present click/iteration)
 				if (open.length === 2) {
-					// calls the functions that updates the  move and star counters each time a pair of cards is turned
+					// calls the functions that updates the move and star counters each time a pair of cards is turned
 					moveCounter();
 					starCounter();
 					if (difficulty === "easy" ? move === 24 : difficulty === "normal" ? move === 30 : move === 35){
@@ -365,21 +372,22 @@ const game = () =>{
 						match[1].classList.remove("open", "show");
 						open.splice(0, 2);
 
-					// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
-					const victory =  () => {
-
-						
+					// displays victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and
+					//, therefore, length), with a wait of 800 milliseconds
+					const victory =  () => {						
 						if (document.getElementsByClassName('match').length === arrays.length) {
 							let gameEnd = Date.now();
 							let gameTime = gameEnd - gameStart;
 							let seconds = gameTime / 1000; // from milliseconds to seconds
 							
-							//logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance). It's the same logic for all difficulty levels
-							// if game took 60 of more seconds
+							// logic for respecting concordance between singular and plural words and numbers (avoid errors like `1 seconds`, or `1 minutes`) 
+							// in modal shown upon victory, displayin how long the game as lasted (along with other information about the player's performance).
+							// It's the same logic for all difficulty levels
+							// If game took 60 or more seconds:
 							if (seconds >= 60) {
-								// if game has round minutes, and no seconds
+								// if game has round minutes, and no seconds:
 								if (Math.floor(seconds % 60) === 0) {
-									//if game has 1 perfect minute, displays it make sure message shown as singular concordance
+									//if game has 1 perfect minute, displays it make sure message shown as singular concordance:
 									if (Math.floor(seconds) === 60) {
 										totalTime = `1 minute`;
 									// if has 2 or more perfect minutes, message with plural concordance
@@ -402,26 +410,25 @@ const game = () =>{
 								totalTime = `${Math.floor(seconds)} seconds`;
 							}
 
+							// Clears star counter animations
 							clearInterval(blinkingIntervalID);
-
 							clearInterval(blinking2IntervalID);
 
-							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
+							// Displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved;
+							// chosen difficulty level; and asking if the player wants to play again, while darkening all background.
 							setTimeout( () => {
+								// Adds div with fixed position and fully displayed peel for darkening all background elements behind the modal's z-index
 								document.querySelector('body').insertAdjacentHTML('afterbegin', '<div id="peel"></div>');
+								// Victory Modal
 								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
 								modalVar.style.display = "flex";
-								window.addEventListener('click', hideRestart);
+								window.addEventListener('click', hideRestart); // Hides victory modal, erases darkened background and restarts game
 							}, 800);
-/*
-							// if array.length cards are matching - which means the game is over - restarts game automatically, after waiting 1 second
-							setTimeout(function() {
-								restart();
-							}, 1000);
-*/						};
+						};
 					}
 
-						// if array.length (each difficulty level has it's own array, with it's own length)number of cards are matching its symbols, displays victory alert box and runs the `restart` function, starting the game all over again, in the same difficulty level
+						// if array.length (each difficulty level has it's own array, with it's own length) number of cards are matching its pair's symbols,
+						//  displays victory modal box and runs the restarts the game all over again, in the same difficulty level
 						victory();
 					}
 				}
@@ -441,8 +448,7 @@ document.getElementById('hard').addEventListener('click', isHard);
 // runs timer function after 1 second
 setTimeout(timer, 1000);
 
-// runs, every 1 second, the animation for violet pointing hand icon over the difficulty level selection buttons
-
+// runs, every 1 second, the animation for hovering violet pointing hand icon over the difficulty level selection buttons
 setInterval (movingHand, 1000);
 
 // starts the game's logic
