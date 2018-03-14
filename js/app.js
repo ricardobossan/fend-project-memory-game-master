@@ -6,17 +6,14 @@
 
  * Project reviewer: 
 
- CURRENT --> * Usability:
- ** text in difficulty selection buttons too small to see on width smaller than 640px
- <--
-
+ CURRENT -->** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions<--
  OK ** Move global variables into function, for safety
  OK ** customize modal, with lienear-gradient.And all other elements on a darker background
  OK ** lines 259-263, use loop instead of repeating statements
- ** See Arrow functions! 
- @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+ 
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
-
+ * Usability:
+ ** text in difficulty selection buttons too small to see on width smaller than 640px
  
 --------------------------------------------------------------------
 
@@ -59,7 +56,7 @@ OK * Switch one of the normal difficulty's symbols for the heart symbol, for col
 Functions
 */
 
-const hideRestart = function() {
+const hideRestart =  () => {
 	document.getElementById('peel').outerHTML = "";
 	document.getElementById('modal').style.display = "none";
 	restart();									
@@ -72,7 +69,7 @@ const hideRestart = function() {
 // the following blocks of functions (`isEasy`, `isnormal` and `isHard`) switch between difficulty levels upon click, changing the number of cards, it's symbols and number of moves necessary to lose stars/rank.
 // Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
 // Function restart is called at the end of each of this difficulty blocks
-let isEasy = function () {
+let isEasy =  () => {
 	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "easy";
@@ -101,7 +98,7 @@ let isEasy = function () {
 	restart();
 }
 
-let isNormal = function () {
+let isNormal =  () => {
 	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "normal";
@@ -134,7 +131,7 @@ let isNormal = function () {
 	restart();
 }
 
-let isHard = function () {
+let isHard =  () => {
 	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "hard";
@@ -176,7 +173,7 @@ Shuffle function from http://stackoverflow.com/a/2450976
 Fisher-Yates Algoritm (Udacity's FEND version)
 */
 
-function shuffle() {
+const shuffle = () => {
 	let currentIndex = arrays.length, temporaryValue, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -189,19 +186,19 @@ function shuffle() {
 }
 
 // Hides all card's symbols, shown for 4 seconds on game start (by the `generate` function - line 201)
-function hideCards () {
-	setTimeout(function() {
+const hideCards = () => {
+	setTimeout( () => {
 	let element = 0;
 		for (let t = 0; t < document.querySelectorAll('.card').length; t++) {document.querySelector('.deck').children[t].classList.remove("open", "show")};;
 	}, 4000);
 }
 
 // Creates a shuffled deck (`.deck`), that displays all cards symbols, then hides them with the `hideCards()` callback function
-const generate = function () {
+const generate =  () => {
 	const deck = document.querySelector('.deck');
 	let shuffledArrays = shuffle(arrays);
 	let fragment = document.createDocumentFragment();
-	arrays.forEach(function createCard(array) {
+	arrays.forEach( (array) => {
 		let li = document.createElement('li');
 		li.classList = "card";
 		li.innerHTML = `<i class="fa ${array}"><i/>`;
@@ -231,7 +228,7 @@ let timer = function myTimer() {
 }
 
 // Function for calling animation on the pointing violet hand, at intervals of 1 second, which will be set further down the code bellow
-const movingHand = function() {
+const movingHand =  () => {
 	let handStyle = document.getElementsByClassName('hands');
 	for (let f = 0; f <= 2; f++) {
 		document.getElementsByClassName('hands').item(f).classList.toggle('hand-dancing');
@@ -239,7 +236,7 @@ const movingHand = function() {
 }
 
 //Restart Button's function: erases previouslly dinamically generated js code, so it can start from 0, upon new round
-const restart = function () {
+const restart =  () => {
 	const deck = document.querySelector('.deck');
 	const starNum = document.querySelector('.stars');
 	const moveNum = document.querySelector('.moves');
@@ -274,7 +271,7 @@ const restart = function () {
 }
 
 // Logic for the game. It moves cards between the `open` and `match`arrays, and adds, removes or toggles it's classes (`.open`, `.show` and `.match`)
-const game = function() {
+const game = () =>{
 		window.removeEventListener('click', hideRestart);
 					let modalVar = document.getElementById('modal');
 						let everyStar = document.getElementsByClassName('fa-star');
@@ -285,14 +282,14 @@ const game = function() {
 	match = [];	 // array list for the pairs of cards that have the same symbol (`.match`)
 	
 	// display the number of moves on the move counter (.moves)
-	const moveCounter = function () {
+	const moveCounter =  () => {
 		const moveNum = document.querySelector('.moves');
 		move++;
 		moveNum.innerHTML = move <= 1 ? move + " Move" : move + " Moves";
 	}
 	
 	// logig for removing each star/rank at a certain sucessive number of moves (different number required for each difficulty setting)
-	const starCounter = function () {
+	const starCounter =  () => {
 		const starNum = document.querySelector('.stars');
 		if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
 			starNum.firstElementChild.outerHTML = "";
@@ -306,7 +303,7 @@ const game = function() {
 	}
 
 	// function with the logic for starting the slower (.blink-1) red blinking star counter, when stars/ranking number reaches 2 stars. Intervals will be se further down the code bellow
-	const blinking = function () {
+	const blinking =  () => {
 		const starNum = document.querySelector('.stars');
 
 		if (difficulty === "easy" ? move >= 14 && move < 19 : difficulty === "normal" ? move >= 19 && move < 25 : move >= 29) {
@@ -316,7 +313,7 @@ const game = function() {
 	}
 
 	// Function for faster (`.blink-2`) red blinking star counter field, at given intervals, to be set further down bellow, and removing the `.blink-1` animation. Does the same for the class `.blink-3`
-	const blinking2 = function () {
+	const blinking2 =  () => {
 		const starNum = document.querySelector('.stars');
 
 		if (difficulty === "easy" ? move >= 19 && move < 24 : difficulty=== "normal" ? move >= 25 && move < 30 : move >= 30){
@@ -335,7 +332,7 @@ const game = function() {
 
 	//adds a click event for every card
 	for (let i = 0; i < everyCard.length; i++) {
-		everyCard.item(i).addEventListener('click', function () {
+		everyCard.item(i).addEventListener('click',  () => {
 
 			// Prevents matching the same card upon double click: checks if the open array item of index `i`, to be added in this iteration, holds the same symbol as the one provided in the previous iteration (`i - 1`). If it doesn't, then the code proceds to check if a pair of clicked cards matches or not the same symbol.
 			if (!open.includes(everyCard.item(i))) {
@@ -372,7 +369,7 @@ const game = function() {
 						open.splice(0, 2);
 
 					// display victory message after the array.length number of cards are matched (each difficulty level has it's own array, with different number of elements and, therefore, length), with a wait of 800 milliseconds
-					const victory = function () {
+					const victory =  () => {
 
 						
 						if (document.getElementsByClassName('match').length === arrays.length) {
@@ -413,7 +410,7 @@ const game = function() {
 							clearInterval(blinking2IntervalID);
 
 							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
-							setTimeout(function() {
+							setTimeout( () => {
 								document.querySelector('body').insertAdjacentHTML('afterbegin', '<div id="peel"></div>');
 								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
 								modalVar.style.display = "flex";
