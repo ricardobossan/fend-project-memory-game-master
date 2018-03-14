@@ -3,18 +3,15 @@
 // TODO
 //
 
-
  * Project reviewer: 
 
- CURRENT -->** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions<--
+ CURRENT -->** text in difficulty selection buttons too small to see on width smaller than 640px<--
  OK ** Move global variables into function, for safety
  OK ** customize modal, with lienear-gradient.And all other elements on a darker background
  OK ** lines 259-263, use loop instead of repeating statements
- 
+ OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
- * Usability:
- ** text in difficulty selection buttons too small to see on width smaller than 640px
- 
+  
 --------------------------------------------------------------------
 
 /*							
