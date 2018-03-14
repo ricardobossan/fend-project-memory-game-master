@@ -6,12 +6,12 @@
 
  * Project reviewer: 
 
- CURRENT --> ** customize modal, with lienear-gradient. Credit modal code w3sschool, on README<--
+ CURRENT --> ** Move global variables into function, for safety<--
 
+ OK ** customize modal, with lienear-gradient.And all other elements on a darker background
  OK ** lines 259-263, use loop instead of repeating statements
  ** See Arrow functions! 
  @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
- ** Move global variables into function, for safety
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
 
  * Usability:
@@ -57,31 +57,7 @@ OK * Switch one of the normal difficulty's symbols for the heart symbol, for col
 Global Variables
 */
 
-let timeCounter = document.getElementById('time-counter');
-    s = 0, m = 0, h = 0;
-/*   	move = 0,*/
-	
-	difficulty = "easy",
-/*	handStyle = document.getElementsByClassName('hands'),*/
-	// game starts at easy difficulty
-	arrays = [
-		"fa-diamond",
-		"fa-diamond",
-		"fa-paper-plane-o",
-		"fa-paper-plane-o",
-		"fa-anchor",
-		"fa-anchor",
-		"fa-bolt",
-		"fa-bolt",
-		"fa-cube",
-		"fa-cube",
-		"fa-leaf",
-		"fa-leaf",
-		"fa-heart",
-		"fa-heart",
-		"fa-bomb",
-		"fa-bomb"
-	];
+let timeCounter = document.getElementById('time-counter'), s, m, h;
 
 // makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
 let handStyle = document.getElementsByClassName('hands');
@@ -91,20 +67,21 @@ handStyle.item(0).style.visibility = 'visible';
 Functions
 */
 
-/*
-3 Difficulty Setting Functions
-*/
-
 const hideRestart = function() {
 	document.getElementById('peel').outerHTML = "";
 	document.getElementById('modal').style.display = "none";
 	restart();									
 }
 
+/*
+3 Difficulty Setting Functions
+*/
+
 // the following blocks of functions (`isEasy`, `isnormal` and `isHard`) switch between difficulty levels upon click, changing the number of cards, it's symbols and number of moves necessary to lose stars/rank.
 // Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
 // Function restart is called at the end of each of this difficulty blocks
 let isEasy = function () {
+	s = 0, m = 0, h = 0;
 	difficulty = "easy";
 	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(1).style.visibility = 'hidden';
@@ -132,6 +109,7 @@ let isEasy = function () {
 }
 
 let isNormal = function () {
+	s = 0, m = 0, h = 0;
 	difficulty = "normal";
 	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(0).style.visibility = 'hidden';
@@ -163,6 +141,7 @@ let isNormal = function () {
 }
 
 let isHard = function () {
+	s = 0, m = 0, h = 0;
 	difficulty = "hard";
 	let handStyle = document.getElementsByClassName('hands');
 	handStyle.item(0).style.visibility = 'hidden';
@@ -249,7 +228,7 @@ let timer = function myTimer() {
             h++;
         }
     }
-    let timeCounter = document.getElementById('time-counter');
+    //let timeCounter = document.getElementById('time-counter');
     timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
 
 	// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
@@ -292,8 +271,10 @@ const restart = function () {
 	open.splice(0, open.length);
 	match.splice(0, match.length);
 	
-	//generate new shuffled array and begins game's logic again
+	//generate new shuffled array
 	generate();
+
+	//begins game's logic
 	game();	
 }
 
@@ -460,8 +441,8 @@ const game = function() {
 	}
 }
 
-// calls function to create deck of shuffled cards
-generate();
+// Game starts at easy difficulty
+window.addEventListener('DOMContentLoaded', isEasy);
 
 // Adds event listeners for each difficulty level selection button
 document.getElementById('easy').addEventListener('click', isEasy);
