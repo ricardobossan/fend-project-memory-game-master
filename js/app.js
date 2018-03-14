@@ -6,16 +6,18 @@
 
  * Project reviewer: 
 
- CURRENT --> ** Move global variables into function, for safety<--
+ CURRENT --> * Usability:
+ ** text in difficulty selection buttons too small to see on width smaller than 640px
+ <--
 
+ OK ** Move global variables into function, for safety
  OK ** customize modal, with lienear-gradient.And all other elements on a darker background
  OK ** lines 259-263, use loop instead of repeating statements
  ** See Arrow functions! 
  @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
  ** Remake README properly, keeping the `Credits and Acknowledgement` section
 
- * Usability:
- ** text in difficulty selection buttons too small to see on width smaller than 640px
+ 
 --------------------------------------------------------------------
 
 /*							
@@ -54,16 +56,6 @@ OK * Switch one of the normal difficulty's symbols for the heart symbol, for col
 */
 
 /*
-Global Variables
-*/
-
-let timeCounter = document.getElementById('time-counter'), s, m, h;
-
-// makes the violet hand hovering above the easy difficulty opotion visible by the beggining of the game (which starts set to `easy` - see line 55
-let handStyle = document.getElementsByClassName('hands');
-handStyle.item(0).style.visibility = 'visible';
-
-/*
 Functions
 */
 
@@ -81,6 +73,7 @@ const hideRestart = function() {
 // Each of these difficulty setting functions hides the two other violet hand pointer at the top of each displayed difficulty option. Make the one above the displayed chosen difficulty level
 // Function restart is called at the end of each of this difficulty blocks
 let isEasy = function () {
+	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "easy";
 	let handStyle = document.getElementsByClassName('hands');
@@ -109,6 +102,7 @@ let isEasy = function () {
 }
 
 let isNormal = function () {
+	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "normal";
 	let handStyle = document.getElementsByClassName('hands');
@@ -141,6 +135,7 @@ let isNormal = function () {
 }
 
 let isHard = function () {
+	let s, m, h;
 	s = 0, m = 0, h = 0;
 	difficulty = "hard";
 	let handStyle = document.getElementsByClassName('hands');
@@ -228,7 +223,7 @@ let timer = function myTimer() {
             h++;
         }
     }
-    //let timeCounter = document.getElementById('time-counter');
+    let timeCounter = document.getElementById('time-counter');
     timeCounter.textContent = `${h > 9 ? h : "0" + h} : ${m > 9 ? m : "0" + m} : ${s > 9 ? s : "0" + s}`;
 
 	// set to run on 1sec intervals, each time the function iterates over itself, until the game is through
@@ -420,7 +415,7 @@ const game = function() {
 							// displays modal with information about the player's performance: how long the round has lasted; the number of stars/rank achieved; chosen difficulty level; and asking if the player wants to play again.
 							setTimeout(function() {
 								document.querySelector('body').insertAdjacentHTML('afterbegin', '<div id="peel"></div>');
-								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And Your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
+								document.getElementById('msg').innerHTML = "Congratulations! You took " + totalTime + " to finish the game! And your rating was " + everyStar.length + (everyStar.length === 1 ? " star" : " stars") + ", at the " + difficulty.toUpperCase() + " difficulty!" + "<br><br>" + "Play again?";
 								modalVar.style.display = "flex";
 								window.addEventListener('click', hideRestart);
 							}, 800);
