@@ -4,14 +4,14 @@
 //
 
 
- CURRENT -->** test styleguide<--
- OK ** Move global variables into function, for safety
- OK ** customize modal, with lienear-gradient.And all other elements on a darker background
- OK ** lines 259-263, use loop instead of repeating statements
- OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+ CURRENT -->** Remake README properly, keeping the `Credits and Acknowledgement`<--
+OK ** Move global variables into function, for safety
+OK ** customize modal, with lienear-gradient.And all other elements on a darker background
+OK ** lines 259-263, use loop instead of repeating statements
+OK ** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+OK ** test styleguide
+OK * Adjust code to meet the project rubric (Project Specification):
 
- OK * Adjust code to meet the project rubric (Project Specification):
- ** Remake README properly, keeping the `Credits and Acknowledgement` section
 --------------------------------------------------------------------
 
 /*
@@ -19,11 +19,11 @@
 // DONE ALREADY
 //
 
- OK * Project reviewer:
- OK ** Move global variables into function, for safety
- OK ** customize modal, with lienear-gradient.And all other elements on a darker background
- OK ** lines 259-263, use loop instead of repeating statements
- OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+OK * Project reviewer:
+OK ** Move global variables into function, for safety
+OK ** customize modal, with lienear-gradient.And all other elements on a darker background
+OK ** lines 259-263, use loop instead of repeating statements
+OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 OK * Review JS comments
 OK * Congratulations Pop Up:
 OK ** Ask if the player wants to play again OK
@@ -35,7 +35,7 @@ OK * Restart Button:
 OK ** restart timer
 OK ** restart star rating
 OK * Star Rating:
-** OK starts withh 3 stars, changes to two and then to one. The number of moves to change rating is up to me
+OK ** starts withh 3 stars, changes to two and then to one. The number of moves to change rating is up to me
 OK * Timer:
 OK ** Timer is displayed at the begining of the game and starts to count
 OK ** When the player wins, the timer stops
@@ -387,19 +387,14 @@ const game = () =>{
 							if (seconds >= 60) {
 								// if game has round minutes, and no seconds:
 								if (Math.floor(seconds % 60) === 0) {
-									//if game has 1 perfect minute, displays it make sure message shown as singular concordance:
+									//if game has 1 perfect minute, makes sure message is shown with singular concordance. Else, if game has 2 or more perfect minutes, message with plural concordance:
 									if (Math.floor(seconds) === 60) {
-										totalTime = `1 minute`;
-									// if has 2 or more perfect minutes, message with plural concordance
-									} else {
-										totalTime = `${Math.floor(seconds / 60)} minutes`;
+										totalTime = `1 minute` || `${Math.floor(seconds / 60)} minutes`;
 									}
 								// same logic as the correspondent if statement, but with the expression ``1 second`` after the first minute
 								} else if (Math.floor(seconds % 60) === 1) {
 									if (Math.floor(seconds) === 61) {
-										totalTime = `1 minute and 1 second`;
-									} else {
-										totalTime = `${Math.floor(seconds / 60)} minutes and 1 second`;
+										totalTime = `1 minute and 1 second` || `${Math.floor(seconds / 60)} minutes and 1 second`;
 									}
 								// plural concordance for plural minutes and seconds
 								} else {
