@@ -3,14 +3,7 @@
 // TODO
 //
 
-
- CURRENT -->** Remake README properly, keeping the `Credits and Acknowledgement`<--
-OK ** Move global variables into function, for safety
-OK ** customize modal, with lienear-gradient.And all other elements on a darker background
-OK ** lines 259-263, use loop instead of repeating statements
-OK ** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
-OK ** test styleguide
-OK * Adjust code to meet the project rubric (Project Specification):
+ CURRENT --><--
 
 --------------------------------------------------------------------
 
@@ -20,10 +13,17 @@ OK * Adjust code to meet the project rubric (Project Specification):
 //
 
 OK * Project reviewer:
+OK ** Remake README properly, keeping the `Credits and Acknowledgement`
 OK ** Move global variables into function, for safety
 OK ** customize modal, with lienear-gradient.And all other elements on a darker background
 OK ** lines 259-263, use loop instead of repeating statements
-OK** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+OK ** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+OK ** test styleguide
+OK ** Move global variables into function, for safety
+OK ** customize modal, with lienear-gradient.And all other elements on a darker background
+OK ** lines 259-263, use loop instead of repeating statements
+OK ** See Arrow functions! @https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+OK * Adjust code to meet the project rubric (Project Specification):
 OK * Review JS comments
 OK * Congratulations Pop Up:
 OK ** Ask if the player wants to play again OK
@@ -51,7 +51,6 @@ OK ** detail the game and all dependencies
 OK	* Javascript Styleguide: Check it all over again
 OK * Switch one of the normal difficulty's symbols for the heart symbol, for color
 ---------------------------------------------------------------------
-
 */
 
 /*
@@ -295,7 +294,7 @@ const game = () =>{
 	// logic for removing each star/rank at a certain sucessive number of moves (different number of moves required for each difficulty setting)
 	const starCounter =  () => {
 		const starNum = document.querySelector('.stars');
-		if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 19 : move === 29) {
+		if (difficulty === "easy" ? move === 14 : difficulty === "normal" ? move === 20 : move === 25) {
 			starNum.firstElementChild.outerHTML = "";
 		}
 		if (difficulty === "easy" ? move === 19 : difficulty === "normal" ? move === 25 : move === 30) {

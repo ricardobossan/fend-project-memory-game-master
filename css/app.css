@@ -75,7 +75,7 @@ h1 {
     margin: 10px 0 0 0;
     padding: 10px;
     width: 100%;
-    position: relative;    
+    position: relative;
     font-size: 2.5em;
     text-align: center;
 
@@ -112,7 +112,7 @@ h1 {
     height: 1.8em;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;    
+    justify-content: space-around;
 }
 
 .hands {
@@ -231,7 +231,7 @@ h1 {
 }
 
 .fa-repeat {
-    font-size: 25px;    
+    font-size: 25px;
 }
 
 .time-container {
@@ -244,7 +244,7 @@ h1 {
     float: left;
 }
 
-/* 
+/*
 Modify colors for the symbols displayed in the cards
  */
 
@@ -299,7 +299,7 @@ Modify colors for the symbols displayed in the cards
 }
 
 
-/* 
+/*
 Animations
  */
 
@@ -307,7 +307,7 @@ Animations
     color: #ff00Bf;
     animation: dance 1s;
 }
- 
+
 .blink-1 {
     animation: blink 1.9s;
 }
