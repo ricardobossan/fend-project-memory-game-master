@@ -2,6 +2,10 @@
 
 ## Credits and Acknowledgement
 
+Favicon icon obtained at: ``https://www.favicon-generator.org/``
+
+Logic for the `myTimer()` function, in `app.js`file obtained at: ``https://teamtreehouse.com/community/i-dont-understand-one-piece-of-code``
+
 I would like to give my sincere thanks to my Udacity's mentor Jai, for the support and encouragement.
 
 I Also would like to express my gratitude to the following, for testing my code's usability and bringing me suggestions for improving it: My parents Harley and Deise Bossan, my girlfriend Amanda Schwarz, my friends Sergio Schwarz, Aluisio Maia, Oyama Scharra, Farney Paixao and Rafael Montenegro.
