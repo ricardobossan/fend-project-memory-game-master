@@ -4,7 +4,7 @@
 
 Favicon icon obtained at: ``https://www.favicon-generator.org/``
 
-Logic for the `myTimer()` function, in `app.js`file obtained at: ``https://teamtreehouse.com/community/i-dont-understand-one-piece-of-code``
+Logic for the `myTimer()` function, in `app.js`file, obtained at: ``https://teamtreehouse.com/community/i-dont-understand-one-piece-of-code``
 
 I would like to give my sincere thanks to my Udacity's mentor Jai, for the support and encouragement.
 
