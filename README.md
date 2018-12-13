@@ -1,5 +1,7 @@
 # Matching Game
 
+![App view][0]
+
 ## Credits and Acknowledgement
 
 Favicon icon obtained at: ``https://www.favicon-generator.org/``
@@ -31,3 +33,5 @@ The player starts the game with 3 stars. At certain move number intervals (this 
 ### Difficulty Levels
 
 There are 3 difficulty settings for the player to choose between in the Matching Game: `Easy`, `Normal` and `Hard`. The `Easy` difficulty is selected by default, once the browser content is first loaded or the browser is refreshed. The player can change the game's difficulty setting at anytime, by clicking on the buttons, each respectively displaying a difficulty level name. Those buttons are always displayed on the screen, and may change the game's difficulty setting at anytime. The `Easy` difficulty setting displays a deck of 16 cards, and player loses 1 star each at 14, 20 and 25 moves. The `Normal` difficulty setting, 20 cards, lose stars at 19, 25 and 30 moves. And the `Hard`, 24 cards, loses stars at 24, 30 and 35 moves.
+
+[0]:/img/app.png
