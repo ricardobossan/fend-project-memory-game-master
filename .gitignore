@@ -1,5 +1,7 @@
+/node_modules
 .DS_Store
 .htmlhintrc
 .stylelintrc
 .eslintrc.json
-Memory-Game_Planning.zip
+npm-debug.log
+/*.env
